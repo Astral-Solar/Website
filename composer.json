@@ -1,0 +1,7 @@
+{
+    "require": {
+        "j0sh0nat0r/simple-cache": "^1.0",
+        "klein/klein": "^2.1",
+        "jenssegers/blade": "^1.4"
+    }
+}
