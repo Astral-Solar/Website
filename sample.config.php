@@ -1,7 +1,7 @@
 <?php
 $config = [];
 // Name of app
-$config['App Name'] = "Departments";
+$config['App Name'] = "Astral";
 // Debug
 $config['Debug'] = true;
 // Domain
