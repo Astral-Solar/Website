@@ -1,3 +1,5 @@
 vendor/*
 .idea/*
 cache/*
+config.php
+handler/database.php
