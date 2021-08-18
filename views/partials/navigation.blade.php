@@ -8,8 +8,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-dropdown">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item" href="{{ $config->get('Domain') }}">
-              <a class="nav-link active">Home</a>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ $config->get('Domain') }}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ $config->get('Domain') }}/forums">Forums</a>
