@@ -1,49 +1,11 @@
-body {
-  overflow-x: hidden;
-  font-family: 'Lato', sans-serif;
-  background-color: #1b1c1d;
-}
-
-.navbar {
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-.navbar img {
-  width: 60px;
-}
-
-.navbar #dropdown-image {
-  width: 30px;
-}
-
-header {
-  width: 100vw;
-  background-color: #0f1010;
-  background-image: url('../media/background.png');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center;
-}
-
-header img {
-  width: 200px;
-}
-
-header h1 {
+.statistics h1 {
   color: #ffffff;
 }
 
-header p {
-  margin-bottom: 50px;
-  color: #6c757d;
+.servers h1 {
+  color: #ffffff;
 }
 
-@media only screen and (max-width: 768px) {
-  .navbar {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
+.chatbox h1 {
+  color: #ffffff;
 }
