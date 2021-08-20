@@ -1,7 +1,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
         <a class="navbar-brand">
-          <img class="d-block mx-auto rounded-circle" src="{{ $config->get('Domain') }}/public/media/logo.jpg">
+          <img class="d-block mx-auto rounded-circle" src="{{ $config->get('Domain') }}/public/media/logo.png">
         </a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-dropdown">
           <span class="navbar-toggler-icon"></span>
