@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{ $config->get('App Name') }} - @yield('title')</title>
-  <link rel="icon" href="{{ $config->get('Domain') }}/assets/media/logo.png" type="image/png">
+  <link rel="icon" href="{{ $config->get('Domain') }}/public/media/logo.png" type="image/png">
   <meta name="title" content="{{ $config->get('App Name') }} - @yield('title')">
   <meta name="description" content>
   <meta name="keywords" content="{{ $config->get('App Name') }} - @yield('title'), Garry's Mod, Roleplay">
