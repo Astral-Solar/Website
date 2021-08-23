@@ -7,7 +7,7 @@ Allow from 127.0.0.1
     Order Allow,Deny
     Allow from all
 </Files>
-<Directory ~ "/public">
+<Files /public>
     Order Allow,Deny
     Allow from all
 </Directory>
