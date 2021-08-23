@@ -1,3 +1,17 @@
+# Block everything but public and index
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+
+<Files /index.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Directory ~ "/public">
+    Order Allow,Deny
+    Allow from all
+</Directory>
+
 # Apache (.htaccess or httpd.conf)
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
