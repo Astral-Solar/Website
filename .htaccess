@@ -1,17 +1,8 @@
-# Block everything but public and index
-Deny from all
-Allow from 127.0.0.1
-
-<Files /index.php>
-    Allow from all
-    Satisfy Any
-</Files>
-<Directorymatch "/public">
-    Allow from all
-    Satisfy Any
-</Directorymatch>
+RewriteEngine On
 
 # Apache (.htaccess or httpd.conf)
-RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . /index.php [L]
+
+# Block everything but public and index
+RewriteRule !^((index\.php)?$|public/) - [F]
