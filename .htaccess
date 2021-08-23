@@ -6,7 +6,7 @@ Allow from 127.0.0.1
     Allow from all
     Satisfy Any
 </Files>
-<Directorymatch "/public/*">
+<Directorymatch "/public">
     Allow from all
     Satisfy Any
 </Directorymatch>
