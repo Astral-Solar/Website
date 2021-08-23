@@ -7,10 +7,6 @@ Allow from 127.0.0.1
     Order Allow,Deny
     Allow from all
 </Files>
-<Files /public>
-    Order Allow,Deny
-    Allow from all
-</Directory>
 
 # Apache (.htaccess or httpd.conf)
 RewriteEngine On
