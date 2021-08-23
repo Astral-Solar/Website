@@ -1,5 +1,5 @@
 # Block everything but public and index
-Order Deny,Allow
+Order Allow,Deny
 Deny from all
 Allow from 127.0.0.1
 
