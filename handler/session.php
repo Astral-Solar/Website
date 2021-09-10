@@ -1,14 +1,4 @@
 <?php
-function CreateSession($id, $key) {
-    global $MainDatabase;
-
-    $id = $MainDatabase->real_escape_string($id);
-    $key = $MainDatabase->real_escape_string($key);
-    $time = time();
-
-    $MainDatabase->query("INSERT INTO sessions(userid, token, created) VALUES ('$id', '$key', $time)");
-}
-
 function GetSessionUser($key) {
     global $MainDatabase;
     global $cache;

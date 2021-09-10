@@ -1,62 +1,82 @@
 <?php
 
-require_once("resource/users.php");
+require_once("resource/common.php");
 
 class User
 {
     public $id;
     public $name;
     public $avatarURL;
-    public $banned;
     public $joined;
     public $lastSeen;
     public $exists;
-    public $isAdmin;
 
     function __construct($id = null)
     {
         global $config;
+        global $databaseMain;
 
         $this->exists = false;
         if (!$id) return;
 
         $this->id = $id;
 
-        $userData = GetUser($id);
+        $userData = $databaseMain->from('users')
+            ->where('userid')->is($id)
+            ->select()
+            ->first();
         if (!$userData) return;
         $this->exists = true;
 
-        $this->name = $userData['name'];
-        $this->avatarURL = $userData['avatar'];
-        $this->banned = $userData['banned'] && $userData['banned'] == 1;
-        $this->joined = $userData['joined'];
+        $this->name = $userData->name;
+        $this->avatarURL = $userData->avatar;
+        $this->joined = $userData->joined;
         $this->lastseen = time();
-
-        $usergroup = GetUserGroup($this->GetSteamID64());
-        $this->isAdmin = $usergroup && isset($config->get('Admin Groups')[$usergroup]) && $config->get('Admin Groups')[$usergroup];
-
     }
 
-    public function Create($id, $name, $avatar)
-    {
-        CreateUser($id, $name, $avatar);
+    public function Create($id, $name, $avatar){
+        global $databaseMain;
+        $databaseMain->insert(array(
+            'userid' => $id,
+            'name' => $name,
+            'avatar' => $avatar,
+            'lastseen' => time(),
+            'joined' => time()
+        ))->into('users');
 
         return new User($id);
     }
 
-    public function CreateFromSession($key)
-    {
-        $userID =  GetSessionUser($key);
+    public function CreateFromSession($key) {
+        global $databaseMain;
+
+        $userID = $databaseMain->from('sessions')
+            ->where('token')->is($key)
+            ->select()
+            ->first();
+
         if (!$userID) return $this;
 
-        return new User($userID);
+        return new User($userID->userid);
     }
     public function CreateSessionKey() {
+        global $databaseMain;
         $key = GenerateRandomString(32);
 
-        CreateSession($this->id, $key);
+        $databaseMain->insert(array(
+            'userid' => $this->GetSteamID64(),
+            'token' => $key,
+            'created' => time()
+        ))->into('sessions');
 
         return $key;
+    }
+    public function DestroySessionKey($key) {
+        global $databaseMain;
+
+        $databaseMain->from('sessions')
+            ->where('token')->is($key)
+            ->delete();
     }
     public function ClearSessions() {
         if (!$this->exists) return;
@@ -69,11 +89,6 @@ class User
 
         return $this->id;
     }
-    public function GetSteamID32() {
-        if (!$this->exists) return;
-
-        return "Unknown";
-    }
     public function GetName() {
         if (!$this->exists) return;
 
@@ -84,68 +99,9 @@ class User
 
         return $this->avatarURL;
     }
-    public function IsAdmin() {
-        if (!$this->exists) return false;
-
-        return $this->isAdmin;
-    }
-    public function GetDataAsArray() {
-        if (!$this->exists) return;
-
-        return ["name" => $this->GetName(), "avatar" => $this->GetAvatarURL()];
-    }
-    public function GetMembers() {
-        if (!$this->exists) return;
-
-        return [];
-    }
-    public function GetDepartments() {
-        if (!$this->exists) return;
-
-        $depsIn = [];
-        $allDeps = new Department();
-
-        foreach($allDeps->GetAll() as $dep) {
-            if (!$dep->GetMember($this->GetSteamID64())) continue;
-
-            array_push($depsIn, $dep);
-        }
-
-        return $depsIn;
-    }
-    public function IsHigherUpInDep($dep) {
-        if (!$this->exists) return;
-
-        return false;
-    }
-    public function IsHigherUp() {
-        if (!$this->exists) return;
-
-        foreach($this->GetDepartments() as $dep) {
-            if ($dep->IsHigherUp($this->GetSteamID64())) return true;
-        }
-
-        return false;
-    }
-    public function GetBanned() {
-        if (!$this->exists) return;
-
-        return $this->banned;
-    }
-    public function SetBanned($state) {
-        if (!$this->exists) return;
-
-        if ($this->GetBanned() == $state) return;
-
-        if ($state) {
-            $this->ClearSessions();
-        }
-
-        UpdateUserBan($this->GetSteamID64(), $state);
-    }
     public function CreateLog($log) {
         if (!$this->exists) return;
 
-        CreateAuditLog($this->GetSteamID64(), $log);
+        //CreateAuditLog($this->GetSteamID64(), $log);
     }
 }

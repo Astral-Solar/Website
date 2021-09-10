@@ -4,7 +4,7 @@
 @section('css', '/public/css/index.css')
 
 @section('header')
-@include('partials.index.header')
+  @include('partials.index.header')
 @endsection
 
 @section('content')

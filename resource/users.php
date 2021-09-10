@@ -1,36 +1,4 @@
 <?php
-function CreateUser($id, $name, $avatar) {
-    global $MainDatabase;
-
-    $id = $MainDatabase->real_escape_string($id);
-    $name = $MainDatabase->real_escape_string($name);
-    $avatar = $MainDatabase->real_escape_string($avatar);
-    $time = time();
-
-    $MainDatabase->query("INSERT INTO users(userid, name, avatar, lastseen, joined) VALUES ('$id', '$name', '$avatar', $time, $time)");
-}
-function GetUser($id) {
-    global $MainDatabase;
-    global $cache;
-
-    if ($cache->has("user-$id")) {
-        return $cache->get("user-$id");
-    }
-
-    $id = $MainDatabase->real_escape_string($id);
-
-    $result = $MainDatabase->query("SELECT * FROM users WHERE userid = '$id' LIMIT 1");
-
-    // Some kind of error
-    if (!$result) return;
-    // No users with this info
-    if ($result->num_rows < 1) return;
-    $result = $result->fetch_array(MYSQLI_ASSOC);
-
-    $cache->store("user-$id", $result, 600);
-
-    return $result;
-}
 function SetUserLastSeen($id) {
     global $MainDatabase;
 
