@@ -42,7 +42,7 @@
 </head>
 
 <body>
-  @yield('header')
+  @include('partials.navigation')
   <main class="container">
     @yield('content')
   </main>
