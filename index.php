@@ -21,6 +21,8 @@ use J0sh0nat0r\SimpleCache\Cache;
 use J0sh0nat0r\SimpleCache\Drivers\Redis;
 use \PalePurple\RateLimit\RateLimit;
 use \PalePurple\RateLimit\Adapter\Redis as RedisAdapter;
+use Opis\Database\Database;
+use Opis\Database\Connection;
 
 // Import other files
 require_once('class/User.php');
@@ -29,6 +31,17 @@ require_once('handler/session.php');
 
 // Load the router object
 $klein = new \Klein\Klein();
+
+// Set up the database connection
+$dbCreds = $config->get("Database Creds");
+$connection = new Connection(
+    'mysql:host=' . $dbCreds['host'] .';dbname=' . $dbCreds['name'],
+    $dbCreds['user'],
+    $dbCreds['pass']
+);
+$connection->persistent();
+
+$databaseMain = new Database($connection);
 
 // Create the cache object, connecting to the Redis server
 $cache = new Cache(Redis::class, [
@@ -41,7 +54,7 @@ $cache = new Cache(Redis::class, [
 $redis = new \Redis();
 $redis->pconnect('127.0.0.1', 6379);
 $adapter = new RedisAdapter($redis);
-$rateLimit = new RateLimit("ratelimit-master", 40, 60, $adapter); // 40 requests a minute
+$rateLimit = new RateLimit("ratelimit-master", 120, 60, $adapter); // 40 requests a minute
 $ip = $_SERVER['REMOTE_ADDR']; // Use client IP as identity
 if (!$rateLimit->check($ip)) {
     die("exceeded rate limit, please try again later");
@@ -55,10 +68,10 @@ if ($config->get("Debug")) {
 $whoops->pushHandler(function($exception, $inspector, $run){
     global $me;
 
-    foreach($inspector->getFrames() as $frame) {
-        $logger = new Errors;
-        $logger->Log($exception->getMessage(), $frame->getFile(), $frame->getLine(), $me ? $me->GetSteamID64() : null);
-    }
+//    foreach($inspector->getFrames() as $frame) {
+//        $logger = new Errors;
+//        $logger->Log($exception->getMessage(), $frame->getFile(), $frame->getLine(), $me ? $me->GetSteamID64() : null);
+//    }
 });
 $whoops->register();
 

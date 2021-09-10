@@ -6,6 +6,9 @@
         "vikas5914/steam-auth": "1.0.3",
         "hassankhan/config": "^2.2",
         "filp/whoops": "^2.12",
-        "palepurple/rate-limit": "^2.0"
+        "palepurple/rate-limit": "^2.0",
+        "robmorgan/phinx": "^0.12.7",
+        "envms/fluentpdo": "^2.2",
+        "opis/database": "^4.2"
     }
 }

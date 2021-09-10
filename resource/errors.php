@@ -1,6 +1,4 @@
 <?php
-require_once("handler/database.php");
-
 function CreateLog($message, $file, $line, $userID = null) {
     global $MainDatabase;;
 

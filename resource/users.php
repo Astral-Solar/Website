@@ -1,6 +1,4 @@
 <?php
-require_once("handler/database.php");
-
 function CreateUser($id, $name, $avatar) {
     global $MainDatabase;
 
