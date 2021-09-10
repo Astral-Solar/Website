@@ -10,8 +10,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbar-dropdown">
                     <div class="navbar-nav me-auto">
-                        <a class="nav-item nav-link" href="{{ $config->get('Domain') }}">Home</a>
-                        <a class="nav-item nav-link" href="{{ $config->get('Domain') }}/forums">Forums</a>
+                        <a class="nav-item nav-link" href="/">Home</a>
+                        <a class="nav-item nav-link" href="/forums">Forums</a>
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                style="color: gold; font-weight: bold;">Store</a>
@@ -23,27 +23,27 @@
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Community</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/community/users">Users</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/community/leaderboard">Leaderboard</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/community/staff">Staff</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/community/punishments">Punishments</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/community/rules">Rules</a>
+                                <a class="dropdown-item" href="/community/users">Users</a>
+                                <a class="dropdown-item" href="/community/leaderboard">Leaderboard</a>
+                                <a class="dropdown-item" href="/community/staff">Staff</a>
+                                <a class="dropdown-item" href="/community/punishments">Punishments</a>
+                                <a class="dropdown-item" href="/community/rules">Rules</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Social</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/social/steam">Steam</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/social/discord">Discord</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/social/gametracker">Gametracker</a>
+                                <a class="dropdown-item" href="/social/steam">Steam</a>
+                                <a class="dropdown-item" href="/social/discord">Discord</a>
+                                <a class="dropdown-item" href="/social/gametracker">Gametracker</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Other</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/commits">Commits</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/legal/termsofservice">Terms Of Service</a>
-                                <a class="dropdown-item" href="{{ $config->get('Domain') }}/legal/privacypolicy">Privacy Policy</a>
+                                <a class="dropdown-item" href="/commits">Commits</a>
+                                <a class="dropdown-item" href="/legal/termsofservice">Terms Of Service</a>
+                                <a class="dropdown-item" href="/legal/privacypolicy">Privacy Policy</a>
                             </div>
                         </div>
                     </div>
@@ -54,9 +54,10 @@
                                     <img class="d-block rounded-circle" src="{{ $me->GetAvatarURL() }}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item">My Profile</a>
+                                    <a class="dropdown-item" href="/profile/{{ $me->GetSteamID64() }}">My Profile</a>
+                                    <a class="dropdown-item" href="/settings">Settings</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ $config->get('Domain') }}/logout">Logout</a>
+                                    <a class="dropdown-item" href="/logout">Logout</a>
                                 </div>
                             </div>
                         </div>

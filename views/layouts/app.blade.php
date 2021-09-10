@@ -25,6 +25,14 @@
   <meta property="twitter:description" content>
   <meta property="twitter:image" content>
 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" type="text/javascript"
+          integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.js" type="text/javascript"
+          integrity="sha512-ade5OkuVL+OsYvavdORMlKVFmuABDGzIVdepnBzif477QxKtPLjJ8H4/GHucoNV7slHB8fDP8uAY1CtpD8RzpQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.css" type="text/css"
     integrity="sha512-9LMt8yHSTC2NNj7wxs1u0wfc8JsHPz2IO3hPj5ZOVhM60uMHDhWxEzO+Yz9wBCJRoMa4UHItzgdwW4ZxVG2O4g=="
     crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -39,6 +47,11 @@
   <link rel="stylesheet" href="{{ $config->get('Domain') }}/public/css/partials/header.css" type="text/css">
   <link rel="stylesheet" href="{{ $config->get('Domain') }}/public/css/partials/navbar.css" type="text/css">
   <link rel="stylesheet" href="{{ $config->get('Domain') }}@yield('css')" type="text/css">
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="/public/js/quill_toolbar.js"></script>
+  <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -47,11 +60,5 @@
     @yield('content')
   </main>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" type="text/javascript"
-  integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.js" type="text/javascript"
-  integrity="sha512-ade5OkuVL+OsYvavdORMlKVFmuABDGzIVdepnBzif477QxKtPLjJ8H4/GHucoNV7slHB8fDP8uAY1CtpD8RzpQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </html>

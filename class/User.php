@@ -5,31 +5,40 @@ require_once("resource/common.php");
 class User
 {
     public $id;
+    public $steamID;
     public $name;
     public $avatarURL;
+    public $background;
+    public $slug;
+    public $bio;
     public $joined;
     public $lastSeen;
     public $exists;
 
-    function __construct($id = null)
+    function __construct($steamID = null)
     {
         global $config;
         global $databaseMain;
 
         $this->exists = false;
-        if (!$id) return;
+        if (!$steamID) return;
 
-        $this->id = $id;
 
         $userData = $databaseMain->from('users')
-            ->where('userid')->is($id)
+            ->where('userid')->is($steamID)
             ->select()
             ->first();
         if (!$userData) return;
         $this->exists = true;
 
+        $this->steamID = $steamID;
+
+        $this->id = $userData->id;
         $this->name = $userData->name;
         $this->avatarURL = $userData->avatar;
+        $this->background = $userData->background or false;
+        $this->slug = $userData->slug or false;
+        $this->bio = $userData->bio or false;
         $this->joined = $userData->joined;
         $this->lastseen = time();
     }
@@ -83,25 +92,103 @@ class User
 
         ClearUserSessions($this->GetSteamID64());
     }
-    // Get methods
-    public function GetSteamID64() {
+    // Get/Set methods
+    private function GetID() {
         if (!$this->exists) return;
 
         return $this->id;
+    }
+    public function GetSteamID64() {
+        if (!$this->exists) return;
+
+        return $this->steamID;
     }
     public function GetName() {
         if (!$this->exists) return;
 
         return $this->name;
     }
+    public function SetName($name) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('users')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'name' => $name
+            ]);
+    }
     public function GetAvatarURL() {
         if (!$this->exists) return;
 
         return $this->avatarURL;
     }
+    public function GetSlug() {
+        if (!$this->exists) return;
+
+        return !($this->slug == "") ? $this->slug : "";
+    }
+    public function SetSlug($slug) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('users')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'slug' => $slug
+            ]);
+    }
+    public function GetBackground() {
+        if (!$this->exists) return;
+
+        return $this->background;
+    }
+    public function SetBackground($background) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('users')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'background' => $background
+            ]);
+    }
+    public function GetBio() {
+        if (!$this->exists) return;
+
+        return $this->bio;
+    }
+    public function SetBio($bio) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('users')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'bio' => $bio
+            ]);
+    }
+
+    // Actions
     public function CreateLog($log) {
         if (!$this->exists) return;
 
         //CreateAuditLog($this->GetSteamID64(), $log);
+    }
+
+    // Generic find methods
+    public function FindByAny($any) {
+        global $databaseMain;
+
+        $user = new User($any);
+        if ($user->exists) return $user;
+
+        $results = $databaseMain->from('users')
+            ->where('slug')->is($any)
+            ->select()
+            ->first();
+        if (!$results) return;
+
+        return new User($results->userid);
     }
 }
