@@ -4,20 +4,19 @@ require_once("resource/common.php");
 
 class User
 {
-    public $id;
-    public $steamID;
-    public $name;
-    public $avatarURL;
-    public $background;
-    public $slug;
-    public $bio;
-    public $joined;
-    public $lastSeen;
+    private $id;
+    private $steamID;
+    private $name;
+    private $avatarURL;
+    private $background;
+    private $slug;
+    private $bio;
+    private $joined;
+    private $lastSeen;
     public $exists;
 
     function __construct($steamID = null)
     {
-        global $config;
         global $databaseMain;
 
         $this->exists = false;

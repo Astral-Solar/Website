@@ -25,9 +25,13 @@ use Opis\Database\Database;
 use Opis\Database\Connection;
 
 // Import other files
-require_once('class/User.php');
-require_once('class/Errors.php');
+$files = scandir('class/');
+foreach($files as $file) {
+    if (!strpos($file, ".php")) continue;
+    require_once('class/' . $file);
+}
 require_once('handler/session.php');
+
 
 // Load the router object
 $klein = new \Klein\Klein();

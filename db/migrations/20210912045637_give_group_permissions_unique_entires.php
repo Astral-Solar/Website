@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class MakeUserAndSessionsUserIDsUnique extends AbstractMigration
+final class GiveGroupPermissionsUniqueEntires extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,8 +18,8 @@ final class MakeUserAndSessionsUserIDsUnique extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('users');
-        $table->addIndex(['userid'], [
+        $table = $this->table('groups_permissions');
+        $table->addIndex(['permission_id', 'node'], [
             'unique' => true
         ])
             ->save();

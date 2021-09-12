@@ -3,7 +3,7 @@
  * VIEWS
  */
 
-$klein->respond('GET', '/profile/[:userID]', function ($request, $response) use ($blade, $me, $steam, $config, $databaseMain) {
+$klein->respond('GET', '/profile/[:userID]', function ($request, $response) use ($blade, $me, $steam, $config) {
     $profileUser = new User();
     $profileUser = $profileUser->FindByAny($request->userID);
 
@@ -16,7 +16,7 @@ $klein->respond('GET', '/profile/[:userID]', function ($request, $response) use 
     return $blade->make('page.profile', ['me' => $me, 'steam' => $steam, 'config' => $config, 'profileOwner' => $profileUser])->render();
 });
 
-$klein->respond('GET', '/settings', function ($request, $response) use ($blade, $me, $steam, $config, $databaseMain) {
+$klein->respond('GET', '/settings', function ($request, $response) use ($blade, $me, $steam, $config) {
     if (!$me->exists) {
         $response->code(403);
         $response->send();
@@ -31,14 +31,12 @@ $klein->respond('GET', '/settings', function ($request, $response) use ($blade, 
  * POST
  */
 
-$klein->respond('POST', '/settings', function ($request, $response, $service) use ($blade, $me, $steam, $config, $databaseMain) {
+$klein->respond('POST', '/settings', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
     if (!$me->exists) {
         $response->code(403);
         $response->send();
         die();
     }
-
-    print_r($_POST);
 
     // Validate Display Name
     $displayName = !($_POST['display_name'] == "") ? $_POST['display_name'] : $me->GetName();
