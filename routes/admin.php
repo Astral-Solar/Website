@@ -51,7 +51,7 @@ $klein->respond('POST', '/admin/permissions/group/create', function ($request, $
 
     $response->redirect("/admin/permissions", 200);
 });
-$klein->respond('POST', '/admin/permissions/nodes', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+$klein->respond('POST', '/admin/permissions/group/nodes', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
     if (!$me->exists) {
         $response->code(403);
         $response->send();
@@ -86,6 +86,54 @@ $klein->respond('POST', '/admin/permissions/nodes', function ($request, $respons
             }
         }
     }
+
+    $response->redirect("/admin/permissions", 200);
+});
+$klein->respond('POST', '/admin/permissions/group/edit', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    if (!$me->HasPermission("groups.edit.permissions")) {
+        $response->code(403);
+        $response->send();
+    }
+
+    print_r($_POST);
+
+    // Validate Display Name
+    $groupID = isset($_POST['group']) ? $_POST['group'] : false;
+    if (!$groupID) {
+        $response->code(400);
+        $response->send();
+        die();
+    }
+    // Validate Display Name
+    $displayName = isset($_POST['display_name']) ? $_POST['display_name'] : false;
+    if (!$displayName or (strlen($displayName) < 1) or (strlen($displayName) > 64)) {
+        $response->code(400);
+        $response->send();
+        die();
+    }
+    // Validate Identifier
+    $identifier = isset($_POST['identifier']) ? $_POST['identifier'] : false;
+    if (!$identifier or (strlen($identifier) < 1) or (strlen($identifier) > 64)) {
+        $response->code(400);
+        $response->send();
+        die();
+    }
+
+    $group = new Group($groupID);
+    if (!$group->exists) {
+        $response->code(400);
+        $response->send();
+        die();
+    }
+
+    $group->SetName($displayName);
+    $group->SetIdentifier($identifier);
 
     $response->redirect("/admin/permissions", 200);
 });

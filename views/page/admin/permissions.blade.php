@@ -56,7 +56,7 @@
     <hr/>
 
     <h2>Group Permissions</h2>
-    <form action="/admin/permissions/nodes" method="post">
+    <form action="/admin/permissions/group/nodes" method="post">
         <h3>Permission Nodes</h3>
         <table style="width: 100%">
             <tr>

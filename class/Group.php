@@ -56,10 +56,30 @@ class Group
 
         return $this->name;
     }
+    public function SetName($name) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('groups')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'name' => $name
+            ]);
+    }
     public function GetIdentifier() {
         if (!$this->exists) return;
 
         return $this->identifier;
+    }
+    public function SetIdentifier($name) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $databaseMain->update('groups')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'identifier' => $name
+            ]);
     }
 
     // Permissions
