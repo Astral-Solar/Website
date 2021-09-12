@@ -4,6 +4,11 @@
  */
 
 $klein->respond('GET', '/admin/permissions', function ($request, $response) use ($blade, $me, $steam, $config) {
+    if (!$me->HasPermission("groups.%")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
 
     return $blade->make('page.admin.permissions', ['me' => $me, 'steam' => $steam, 'config' => $config])->render();
 });
@@ -14,6 +19,12 @@ $klein->respond('GET', '/admin/permissions', function ($request, $response) use 
  */
 $klein->respond('POST', '/admin/permissions/group/create', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
     if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    if (!$me->HasPermission("groups.create")) {
         $response->code(403);
         $response->send();
         die();
@@ -47,12 +58,11 @@ $klein->respond('POST', '/admin/permissions/nodes', function ($request, $respons
         die();
     }
 
-    // To be implemented soon :tm:
-//    if (!$me->HasPermission("groups.edit")) {
-//        $response->code(403);
-//        $response->send();
-//        die();
-//    }
+    if (!$me->HasPermission("groups.edit.permissions")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
 
     $allGroups = new Group();
     $allGroups = $allGroups->GetAllGroups();

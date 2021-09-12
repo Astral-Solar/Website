@@ -37,15 +37,24 @@ require_once('handler/session.php');
 $klein = new \Klein\Klein();
 
 // Set up the database connection
-$dbCreds = $config->get("Database Creds");
+// Main Database
+$dbCreds = $config->get("Main Database Credentials");
 $connection = new Connection(
     'mysql:host=' . $dbCreds['host'] .';dbname=' . $dbCreds['name'],
     $dbCreds['user'],
     $dbCreds['pass']
 );
 $connection->persistent();
-
 $databaseMain = new Database($connection);
+// xAdmin Database
+$dbCreds = $config->get("xAdmin Database Credentials");
+$connection = new Connection(
+    'mysql:host=' . $dbCreds['host'] .';dbname=' . $dbCreds['name'],
+    $dbCreds['user'],
+    $dbCreds['pass']
+);
+$connection->persistent();
+$databasexAdmin = new Database($connection);
 
 // Create the cache object, connecting to the Redis server
 $cache = new Cache(Redis::class, [

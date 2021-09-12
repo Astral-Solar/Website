@@ -72,7 +72,15 @@ class Group
             ->where('node')->is($node)
             ->select()
             ->first();
-        if (!$groupData) return false;
+
+        // We can use this to get general permissions. For example if we want to check if a user has any permission in the group category
+        if (!$groupData) {
+            $allPermissions = $this->GetAllPermissions($node);
+
+            if (!$allPermissions) return false;
+
+            return true;
+        }
 
         return true;
     }
@@ -93,6 +101,16 @@ class Group
             ->where('group_id')->is($this->GetID())
             ->where('node')->is($node)
             ->delete();
+    }
+    public function GetAllPermissions($flag = '%') {
+        if (!$this->exists) return;
+
+        global $databaseMain;
+        return $databaseMain->from('groups_permissions')
+            ->where('group_id')->is($this->GetID())
+            ->where('node')->like($flag)
+            ->select()
+            ->all();
     }
 
     // Actions

@@ -168,6 +168,37 @@ class User
             ]);
     }
 
+    // Permissions
+    public function GetUserGroup() {
+        if (!$this->exists) return;
+        global $databasexAdmin;
+        global $config;
+
+        //if (true) return "admin";
+
+        $userGroup = $databasexAdmin->from($config->get('xAdmin Permission Prefix') . "_users")
+            ->where('userid')->is($this->GetSteamID64())
+            ->select('rank')
+            ->first();
+        if (!$userGroup) return $config->get('Default Usergroup');
+
+        return $userGroup->rank;
+    }
+    public function GetGroup() {
+        if (!$this->exists) return;
+        $groupIdentifier = $this->GetUserGroup();
+
+        return new Group($groupIdentifier);
+    }
+    public function HasPermission($node) {
+        if (!$this->exists) return;
+        $group = $this->GetGroup();
+
+        if (!$group) return false;
+
+        return $group->HasPermission($node);
+    }
+
     // Actions
     public function CreateLog($log) {
         if (!$this->exists) return;
