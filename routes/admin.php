@@ -112,8 +112,6 @@ $klein->respond('POST', '/admin/permissions/group/edit', function ($request, $re
         $response->send();
     }
 
-    print_r($_POST);
-
     // Validate Display Name
     $groupID = isset($_POST['group']) ? $_POST['group'] : false;
     if (!$groupID) {

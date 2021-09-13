@@ -76,6 +76,25 @@ class Board
 
         return new Board($this->parentID);
     }
+    public function GetChildren() {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $results = $databaseMain->from('forums_boards')
+            ->where('parent_id')->is($this->GetID())
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+
+        $boards = [];
+        foreach($results as $board) {
+            $boardOjb = new Board($board->id);
+            array_push($boards, $boardOjb);
+        }
+
+        return $boards;
+    }
 
     // Other
     public function GetBreadCrumb() {

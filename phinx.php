@@ -1,7 +1,7 @@
 <?php
 
 $config = require 'config.php';
-$creds = $config['Database Creds'];
+$creds = $config['Main Database Credentials'];
 
 return
 [
