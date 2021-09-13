@@ -150,6 +150,5 @@ class Group
         }
 
         return $groups;
-;
     }
 }
