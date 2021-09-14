@@ -19,7 +19,7 @@ final class GiveGroupPermissionsUniqueEntires extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('groups_permissions');
-        $table->addIndex(['permission_id', 'node'], [
+        $table->addIndex(['group_id', 'node'], [
             'unique' => true
         ])
             ->save();

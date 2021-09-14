@@ -19,9 +19,9 @@ final class CreateGroupPermissionsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('groups_permissions');
-        $table->addColumn('permission_id', 'integer', ['limit' => 32])
+        $table->addColumn('group_id', 'integer', ['limit' => 32])
             ->addColumn('node', 'string', ['limit' => 128])
-            ->addForeignKey('permission_id', 'groups', 'id')
+            ->addForeignKey('group_id', 'groups', 'id')
             ->create();
     }
 }
