@@ -40,6 +40,8 @@ class ThreadPost
     public function Create($thread, $content, $creator){
         global $databaseMain;
 
+        $content = str_replace(["<", ">"], "", $content);
+
         $databaseMain->insert(array(
             'thread_id' => $thread->GetID(),
             'content' => $content,
@@ -77,6 +79,11 @@ class ThreadPost
         if (!$this->exists) return;
 
         return $this->created;
+    }
+    public function GetThread() {
+        if (!$this->exists) return;
+
+        return new Thread($this->threadID);
     }
     public function IsDeleted() {
         if (!$this->exists) return;

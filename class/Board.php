@@ -118,7 +118,7 @@ class Board
 
     // Other
     public function GetBreadCrumb() {
-        if (!$this->exists) return;
+        if (!$this->exists) return [];
         $boards = [];
 
         $targetBoard = $this->GetParent();
@@ -172,7 +172,7 @@ class Board
                 ->select()
                 ->all();
         }
-        if (!$results) return;
+        if (!$results) return [];
 
 
         $boards = [];

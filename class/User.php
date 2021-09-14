@@ -161,20 +161,41 @@ class User
         if (!$this->exists) return;
         global $databaseMain;
 
+        $bio = str_replace(["<", ">"], "", $bio);
+
         $databaseMain->update('users')
             ->where('id')->is($this->GetID())
             ->set([
                 'bio' => $bio
             ]);
     }
+    public function GetRecentForumPosts($amount = 10) {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $results = $databaseMain->from("forums_threads_posts")
+            ->where('creator')->is($this->GetSteamID64())
+            ->orderBy('last_edited', 'desc')
+            ->limit($amount)
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+        $posts = [];
+        foreach($results as $post) {
+            $postOjb = new ThreadPost($post->id);
+            array_push($posts, $postOjb);
+        }
+
+        return $posts;
+    }
+
 
     // Permissions
     public function GetUserGroup() {
         if (!$this->exists) return;
         global $databasexAdmin;
         global $config;
-
-        //if (true) return "admin";
 
         $userGroup = $databasexAdmin->from($config->get('xAdmin Permission Prefix') . "_users")
             ->where('userid')->is($this->GetSteamID64())

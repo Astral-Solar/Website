@@ -15,14 +15,14 @@
           <!-- This is currently not fully implemented. If you want to use this for now, set it in your settings as a imgurID -->
           <div class="card-body" style="background-image: url('https://i.imgur.com/{{ $me->GetBackground() }}.jpg')">
             <div class="profile-header">
-              <img class="d-block mx-auto rounded-circle" src="{{ $me->GetAvatarURL() }}">
+              <img class="d-block mx-auto rounded-circle" src="{{ $profileOwner->GetAvatarURL() }}">
               <h4 class="text-center mt-3">
-                {{ $me->GetName() }}
+                {{ $profileOwner->GetName() }}
               </h4>
             </div>
             <hr>
             <div class="card-text">
-              <b>Steam ID:</b> {{ $me->GetSteamID64() }}
+              <b>Steam ID:</b> {{ $profileOwner->GetSteamID64() }}
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade show active" id="profile">
-                @if($me->GetBio())
+                @if($profileOwner->GetBio())
                 <h3 class="card-text mt-3">Bio</h3>
                 <div class="card">
                   <div class="card-body" id="bioViewer">
@@ -54,7 +54,22 @@
                 </div>
                 @endif
               </div>
-              <div class="tab-pane fade" id="forums">...</div>
+              <div class="tab-pane fade" id="forums">
+                @foreach($profileOwner->GetRecentForumPosts() as $post)
+                  <a href="/forums/threads/{{ $post->GetThread()->GetID() }}"><h5>{{ $post->GetThread()->GetTitle() }}</h5></a>
+                  <h6>{{ $post->GetCreated() }}</h6>
+                  <div id="post_{{ $post->GetID() }}"></div>
+
+                  <script>
+                    $(document).ready(function() {
+                      var quill = new Quill('#post_{{ $post->GetID() }}', {});
+                      var data =  {!! $post->GetContent() !!}; // Maybe you can XXS with this?
+                      quill.setContents(data);
+                      quill.enable(false);
+                    });
+                  </script>
+                @endforeach
+              </div>
               <div class="tab-pane fade" id="servers">...</div>
             </div>
           </div>
@@ -67,7 +82,7 @@
     var data;
     $(document).ready(function () {
       quill = new Quill('#bioViewer', {});
-      data = <?= $me -> GetBio() ?>; // Maybe you can XXS with this?
+      data = <?= $profileOwner->GetBio() ?>; // Maybe you can XXS with this?
       quill.setContents(data);
       quill.enable(false);
     });
