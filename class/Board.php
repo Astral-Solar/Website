@@ -95,6 +95,26 @@ class Board
 
         return $boards;
     }
+    public function GetThreads() {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $results = $databaseMain->from('forums_threads')
+            ->orderBy('last_edited', 'desc')
+            ->where('board_id')->is($this->GetID())
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+
+        $threads = [];
+        foreach($results as $thread) {
+            $threadOjb = new Thread($thread->id);
+            array_push($threads, $threadOjb);
+        }
+
+        return $threads;
+    }
 
     // Other
     public function GetBreadCrumb() {

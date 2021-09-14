@@ -51,9 +51,7 @@ $klein->respond('GET', '/forums/threads/[i:threadID]', function ($request, $resp
         die();
     }
 
-    $board = new Board($thread->GetID());
-
-    if (!$me->HasPermission($board->GetID() . ':forums.thread.read')) {
+    if (!$me->HasPermission($thread->GetBoard()->GetID() . ':forums.thread.read')) {
         $response->code(403);
         $response->send();
         die();
@@ -94,7 +92,7 @@ $klein->respond('POST', '/forums/boards/[i:boardID]/thread/create', function ($r
         die();
     }
 
-    // Validate Bio
+    // Validate content
     $content = !($_POST['content'] == '{"ops":[{"insert":"\n"}]}') ? $_POST['content'] : false;
     if (!$content) {
         $response->code(402);
@@ -108,6 +106,41 @@ $klein->respond('POST', '/forums/boards/[i:boardID]/thread/create', function ($r
 
     $post = new ThreadPost();
     $post->Create($thread, $content, $me);
+
+    $response->redirect("/forums/threads/" . $thread->GetID(), 200);
+});
+$klein->respond('POST', '/forums/threads/[i:threadID]/reply', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread = new Thread($request->threadID);
+
+    if (!$thread->exists) {
+        $response->code(404);
+        $response->send();
+        die();
+    }
+    if ($thread->IsLocked()) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    // Validate content
+    $content = !($_POST['content'] == '{"ops":[{"insert":"\n"}]}') ? $_POST['content'] : false;
+    if (!$content) {
+        $response->code(402);
+        $response->send();
+        die();
+    }
+
+    $post = new ThreadPost();
+    $post->Create($thread, $content, $me);
+
+    $thread->UpdateLastEdited();
 
     $response->redirect("/forums/threads/" . $thread->GetID(), 200);
 });

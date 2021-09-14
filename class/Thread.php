@@ -37,6 +37,7 @@ class Thread
         $this->deleted = $threadData->deleted;
         $this->sticky = $threadData->sticky;
         $this->creator = $threadData->creator;
+        $this->created = $threadData->created;
         $this->lastEdited = $threadData->last_edited;
     }
 
@@ -86,6 +87,27 @@ class Thread
 
         return $this->created;
     }
+    public function GetLastEdited() {
+        if (!$this->exists) return;
+
+        return $this->lastEdited;
+    }
+    public function UpdateLastEdited() {
+        if (!$this->exists) return;
+
+        global $databaseMain;
+
+        $databaseMain->update('forums_threads')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'last_edited' => time()
+            ]);
+    }
+    public function IsLocked() {
+        if (!$this->exists) return;
+
+        return $this->locked;
+    }
     public function GetPosts() {
         if (!$this->exists) return;
         global $databaseMain;
@@ -104,5 +126,18 @@ class Thread
         }
 
         return $posts;
+    }
+    public function GetLastPost() {
+        if (!$this->exists) return;
+        global $databaseMain;
+
+        $results = $databaseMain->from('forums_threads_posts')
+            ->where('thread_id')->is($this->GetID())
+            ->select()
+            ->first();
+        if (!$results) return;
+
+
+        return new ThreadPost($results->id);
     }
 }

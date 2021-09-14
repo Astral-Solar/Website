@@ -28,8 +28,16 @@
     <hr/>
 
     @if($me->HasPermission($masterBoard->GetID() . ':forums.thread.write'))
-        <a href="/forums/boards/{{ $masterBoard->GetID() }}/thread/create">Create a cool thread?</a>
+        <a href="/forums/boards/{{ $masterBoard->GetID() }}/thread/create">Create a thread</a>
     @endif
 
     <!-- All the threads -->
+    @foreach($masterBoard->GetThreads() as $thread)
+        <h4><a href="/forums/threads/{{ $thread->GetID() }}">{{ $thread->GetTitle() }}</a></h4>
+        <h5>By {{ $thread->GetCreator()->GetName() }}, {{ $thread->GetCreated() }}</h5>
+        @if($thread->GetLastPost())
+            <h5>Last Post: {{ $thread->GetLastPost()->GetCreator()->GetName()  }}, {{ $thread->GetLastPost()->GetCreated() }}</h5>
+        @endif
+        <br>
+    @endforeach
 @endsection

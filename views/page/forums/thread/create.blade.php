@@ -36,7 +36,7 @@
                 modules: {
                     toolbar: toolbarOptions
                 },
-                placeholder: 'Please add content to your document!',
+                placeholder: 'The body of your cool thread',
                 theme: 'snow'  // or 'bubble'
             });
 
