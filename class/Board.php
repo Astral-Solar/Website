@@ -147,7 +147,7 @@ class Board
         $results = $databaseMain->from('forums_boards')
             ->select()
             ->all();
-        if (!$results) return;
+        if (!$results) return [];
 
 
         $boards = [];
