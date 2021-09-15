@@ -100,6 +100,7 @@ class Board
         global $databaseMain;
 
         $results = $databaseMain->from('forums_threads')
+            ->orderBy('sticky', 'desc')
             ->orderBy('last_edited', 'desc')
             ->where('board_id')->is($this->GetID())
             ->select()

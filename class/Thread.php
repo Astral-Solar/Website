@@ -108,6 +108,49 @@ class Thread
 
         return $this->locked;
     }
+    public function SetLocked($state) {
+        if (!$this->exists) return;
+
+        global $databaseMain;
+
+        $databaseMain->update('forums_threads')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'locked' => $state
+            ]);
+    }
+    public function IsPinned() {
+        if (!$this->exists) return;
+
+        return $this->sticky;
+    }
+    public function SetPinned($state) {
+        if (!$this->exists) return;
+
+        global $databaseMain;
+
+        $databaseMain->update('forums_threads')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'sticky' => $state
+            ]);
+    }
+    public function IsDeleted() {
+        if (!$this->exists) return;
+
+        return $this->deleted;
+    }
+    public function SetDeleted($state) {
+        if (!$this->exists) return;
+
+        global $databaseMain;
+
+        $databaseMain->update('forums_threads')
+            ->where('id')->is($this->GetID())
+            ->set([
+                'deleted' => $state
+            ]);
+    }
     public function GetPosts() {
         if (!$this->exists) return;
         global $databaseMain;

@@ -44,6 +44,7 @@ $klein->respond('GET', '/forums/boards/[i:boardID]/thread/create', function ($re
 
 $klein->respond('GET', '/forums/threads/[i:threadID]', function ($request, $response) use ($blade, $me, $steam, $config) {
     $thread = new Thread($request->threadID);
+    $threadID = $thread->GetBoard()->GetID();
 
     if (!$thread->exists) {
         $response->code(404);
@@ -51,7 +52,13 @@ $klein->respond('GET', '/forums/threads/[i:threadID]', function ($request, $resp
         die();
     }
 
-    if (!$me->HasPermission($thread->GetBoard()->GetID() . ':forums.thread.read')) {
+    if (!$me->HasPermission( "$threadID:forums.thread.read")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+    // The thread is deleted and they can't see deleted threads
+    if ($thread->IsDeleted() and !$me->HasPermission( "$threadID:forums.thread.delete")) {
         $response->code(403);
         $response->send();
         die();
@@ -123,7 +130,7 @@ $klein->respond('POST', '/forums/threads/[i:threadID]/reply', function ($request
         $response->send();
         die();
     }
-    if ($thread->IsLocked()) {
+    if ($thread->IsLocked() or $thread->IsDeleted()) {
         $response->code(403);
         $response->send();
         die();
@@ -141,6 +148,79 @@ $klein->respond('POST', '/forums/threads/[i:threadID]/reply', function ($request
     $post->Create($thread, $content, $me);
 
     $thread->UpdateLastEdited();
+
+    $response->redirect("/forums/threads/" . $thread->GetID(), 200);
+});
+// Moderation actions
+$klein->respond('POST', '/forums/threads/[i:threadID]/lock', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread = new Thread($request->threadID);
+
+    if (!$thread->exists) {
+        $response->code(404);
+        $response->send();
+        die();
+    }
+    if (!$me->HasPermission($thread->GetID() . ":forums.thread.close")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread->SetLocked(!$thread->IsLocked());
+
+    $response->redirect("/forums/threads/" . $thread->GetID(), 200);
+});
+$klein->respond('POST', '/forums/threads/[i:threadID]/pin', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread = new Thread($request->threadID);
+
+    if (!$thread->exists) {
+        $response->code(404);
+        $response->send();
+        die();
+    }
+    if (!$me->HasPermission($thread->GetID() . ":forums.thread.sticky")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread->SetPinned(!$thread->IsPinned());
+
+    $response->redirect("/forums/threads/" . $thread->GetID(), 200);
+});
+$klein->respond('POST', '/forums/threads/[i:threadID]/delete', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    if (!$me->exists) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread = new Thread($request->threadID);
+
+    if (!$thread->exists) {
+        $response->code(404);
+        $response->send();
+        die();
+    }
+    if (!$me->HasPermission($thread->GetID() . ":forums.thread.delete")) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    $thread->SetDeleted(!$thread->IsDeleted());
 
     $response->redirect("/forums/threads/" . $thread->GetID(), 200);
 });
