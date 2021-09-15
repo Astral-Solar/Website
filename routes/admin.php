@@ -25,6 +25,15 @@ $klein->respond('GET', '/admin/forums', function ($request, $response) use ($bla
 });
 
 
+$klein->respond('GET', '/admin', function ($request, $response) use ($blade, $me, $steam, $config) {
+    if (!$me->HasPermission("groups.%") and !$me->HasPermission('forums.%')) {
+        $response->code(403);
+        $response->send();
+        die();
+    }
+
+    return $blade->make('page.admin.index', ['me' => $me, 'steam' => $steam, 'config' => $config])->render();
+});
 /*
  * POST
  */
