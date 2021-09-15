@@ -16,8 +16,7 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                style="color: gold; font-weight: bold;">Store</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" onclick="buyCredits()">Buy Credits</a>
-                                <a class="dropdown-item" onclick="giftCredits()">Gift Credits</a>
+                                <a class="dropdown-item" href="/store/premium">Go Premium</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
