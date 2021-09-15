@@ -51,11 +51,14 @@
                         <div class="navbar-nav">
                             <div class="nav-item dropdown">
                                 <a class="nav-link" data-bs-toggle="dropdown">
-                                    <img class="d-block rounded-circle" src="{{ $me->GetAvatarURL() }}">
+                                    <img class="d-block rounded-circle" src="{{ $me->GetAvatar() }}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="/profile/{{ $me->GetSteamID64() }}">My Profile</a>
                                     <a class="dropdown-item" href="/settings">Settings</a>
+                                    @if($me->HasPermission('groups.%') or $me->HasPermission('forums.%'))
+                                        <a class="dropdown-item" href="/admin">Admin</a>
+                                    @endif
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/logout">Logout</a>
                                 </div>

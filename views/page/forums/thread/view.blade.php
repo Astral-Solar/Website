@@ -29,7 +29,7 @@
 
     <hr/>
     @foreach($thread->GetPosts() as $post)
-        <img src="{{ $post->GetCreator()->GetAvatarURL() }}"/>
+        <img src="{{ $post->GetCreator()->GetAvatar() }}"/>
         <img src="{{ $post->GetCreator()->GetBackground() }}"/>
         <h3>{{ $post->GetCreator()->GetName() }} - {{ $post->GetCreated() }}</h3>
         <div id="post_{{ $post->GetID() }}"></div>

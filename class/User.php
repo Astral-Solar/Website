@@ -52,6 +52,10 @@ class User
             'joined' => time()
         ))->into('users');
 
+        global $imageHandler;
+        $img = $imageHandler->make($avatar);
+        $img->save('public/storage/avatar/' . $id . '.jpg');
+
         return new User($id);
     }
 
@@ -122,6 +126,11 @@ class User
 
         return $this->avatarURL;
     }
+    public function GetAvatar() {
+        if (!$this->exists) return;
+
+        return '/public/storage/avatar/' . $this->GetSteamID64() . '.jpg';
+    }
     public function GetSlug() {
         if (!$this->exists) return;
 
@@ -140,7 +149,8 @@ class User
     public function GetBackground() {
         if (!$this->exists) return;
 
-        return $this->background;
+        return "/public/storage/backgrounds/" . $this->GetSteamID64() . ".jpg";
+        //return $this->background;
     }
     public function SetBackground($background) {
         if (!$this->exists) return;

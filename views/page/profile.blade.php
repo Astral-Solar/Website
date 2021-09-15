@@ -13,9 +13,9 @@
       <div class="col-lg-3 mb-4">
         <div class="card">
           <!-- This is currently not fully implemented. If you want to use this for now, set it in your settings as a imgurID -->
-          <div class="card-body" style="background-image: url('https://i.imgur.com/{{ $me->GetBackground() }}.jpg')">
+          <div class="card-body" style="background-image: url('{{ $me->GetBackground() }}')">
             <div class="profile-header">
-              <img class="d-block mx-auto rounded-circle" src="{{ $profileOwner->GetAvatarURL() }}">
+              <img class="d-block mx-auto rounded-circle" src="{{ $profileOwner->GetAvatar() }}">
               <h4 class="text-center mt-3">
                 {{ $profileOwner->GetName() }}
               </h4>

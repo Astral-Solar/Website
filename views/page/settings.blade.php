@@ -21,10 +21,9 @@
           </div>
           <h4>Background</h4>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="background">https://i.imgur.com/</span>
-            <input type="text" class="form-control" name="background" value="{{ $me->GetBackground() }}" placeholder="Imgur ID" aria-describedby="background">
-            <span class="input-group-text" id="background">.jpeg</span>
+            <input type="file" name="background" accept="image/png, image/jpeg">
           </div>
+
           <h4>Bio</h4>
           <textarea style="display: none" id="bio_shadow" name="bio"></textarea>
           <div class="mb-3" style="height: 200px" id="bio_editor">

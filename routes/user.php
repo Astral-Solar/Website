@@ -55,7 +55,20 @@ $klein->respond('POST', '/settings', function ($request, $response, $service) us
     }
 
     // Validate Background
-    $background = !($_POST['background'] == "") ? $_POST['background'] : NULL;
+    $background = isset($_FILES['background']['tmp_name']) ? $_FILES['background']['tmp_name'] : false;
+    echo $background;
+    if ($background) {
+        echo "Background found";
+        global $imageHandler;
+
+        $img = $imageHandler->make($background);
+
+        if ($img->filesize() > $config->get('File Size'))  {
+            $response->code(402);
+            $response->send();
+            die();
+        }
+    }
     // This is the part where we process it with Imgur or something
 
     // Validate Slug
@@ -71,7 +84,9 @@ $klein->respond('POST', '/settings', function ($request, $response, $service) us
     $me->SetName($displayName);
     $me->SetBio($bio);
     if ($background) {
-        $me->SetBackground($background);
+        echo "Cool background bro";
+        $img->save('public/storage/backgrounds/' . $me->GetSteamID64() . '.jpg');
+//        $me->SetBackground($background);
     }
     $me->SetSlug($slug);
 

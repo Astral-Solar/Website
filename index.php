@@ -23,6 +23,7 @@ use \PalePurple\RateLimit\RateLimit;
 use \PalePurple\RateLimit\Adapter\Redis as RedisAdapter;
 use Opis\Database\Database;
 use Opis\Database\Connection;
+use Intervention\Image\ImageManager;
 
 // Import other files
 $files = scandir('class/');
@@ -32,6 +33,8 @@ foreach($files as $file) {
 }
 require_once('handler/session.php');
 
+// Set up Image stuff
+$imageHandler = new ImageManager(array('driver' => 'GD'));
 
 // Load the router object
 $klein = new \Klein\Klein();
