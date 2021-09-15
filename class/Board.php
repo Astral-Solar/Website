@@ -35,7 +35,7 @@ class Board
         $this->created = $boardData->created;
     }
 
-    public function Create($name, $description, $parent, $creator){
+    public function Create($name, $description, $parent, $creator, $background = false){
         global $databaseMain;
 
         $data = array(
@@ -52,6 +52,14 @@ class Board
 
         $databaseMain->insert($data)
             ->into('forums_boards');
+
+        $boardID = $databaseMain->getConnection()->getPDO()->lastInsertId();
+
+        if ($background) {
+            $background->save('public/storage/forums/' . $boardID . '.jpg');
+        }
+
+        return new Board($boardID);
     }
 
     // Get/Set methods
@@ -115,6 +123,16 @@ class Board
         }
 
         return $threads;
+    }
+
+    public function GetImage() {
+        if (!$this->exists) return;
+
+        global $imageHandler;
+
+        if(!file_exists('public/storage/forums/' . $this->GetID() . '.jpg')) return false;
+
+        return '/public/storage/forums/' . $this->GetID() . '.jpg';
     }
 
     // Other

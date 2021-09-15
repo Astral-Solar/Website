@@ -15,6 +15,10 @@
         <h1>{{ $board->GetName() }}</h1>
         <!-- The Description -->
         <h2>{{ $board->GetDescription() }}</h2>
+        <!-- The Image -->
+        @if($board->GetImage())
+            <img src="{{ $board->GetImage() }}">
+        @endif
         <!-- All the child boards that should be listed inside the master board -->
         Children:
         @foreach($board->GetChildren() as $child)

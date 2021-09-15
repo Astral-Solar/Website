@@ -15,7 +15,7 @@
     <hr/>
 
     <h2>Create Board</h2>
-    <form action="/admin/forums/board/create" method="post">
+    <form action="/admin/forums/board/create" method="post" enctype="multipart/form-data">
         <h3>Display Name</h3>
         <input type="text" name="display_name" placeholder="General Discussion">
 
@@ -29,6 +29,9 @@
                 <option value="{{ $board->GetID() }}">{{ $board->GetName() }}</option>
             @endforeach
         </select>
+
+        <h4>Background</h4>
+        <input type="file" name="background" accept="image/png, image/jpeg">
 
         <h3>Submit</h3>
         <button type="submit" value="Submit">Submit</button>

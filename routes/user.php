@@ -56,9 +56,7 @@ $klein->respond('POST', '/settings', function ($request, $response, $service) us
 
     // Validate Background
     $background = isset($_FILES['background']['tmp_name']) ? $_FILES['background']['tmp_name'] : false;
-    echo $background;
     if ($background) {
-        echo "Background found";
         global $imageHandler;
 
         $img = $imageHandler->make($background);
@@ -69,7 +67,6 @@ $klein->respond('POST', '/settings', function ($request, $response, $service) us
             die();
         }
     }
-    // This is the part where we process it with Imgur or something
 
     // Validate Slug
     $slug = !($_POST['slug'] == "") ? $_POST['slug'] : NULL;

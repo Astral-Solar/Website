@@ -194,11 +194,24 @@ $klein->respond('POST', '/admin/forums/board/create', function ($request, $respo
             die();
         }
     }
+    // Validate Background
+    $background = isset($_FILES['background']['tmp_name']) ? $_FILES['background']['tmp_name'] : false;
+    if ($background) {
+        global $imageHandler;
+
+        $img = $imageHandler->make($background);
+
+        if ($img->filesize() > $config->get('File Size'))  {
+            $response->code(402);
+            $response->send();
+            die();
+        }
+    }
 
     // Create the board
     $board = new Board();
-    $board->Create($displayName, $description, $parent, $me);
-//
+    $board->Create($displayName, $description, $parent, $me, $background ? $img : false);
+
     $response->redirect("/admin/forums", 200);
 });
 
