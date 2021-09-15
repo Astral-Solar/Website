@@ -10,13 +10,17 @@
 @section('content')
     <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
-    <main class="container">
-        <div class="card m-5">
-            <div class="card-body">
-                <div class="checkout-container"></div>
-            </div>
-        </div>
-    </main>
+    <h1>101 reasons to give us money</h1>
+
+    <h2>Reason 1</h2>
+    <img src="https://www.cnet.com/a/img/aTLKqWz80LEDLhuX74RcgdKiXMM=/1200x675/2020/02/14/676146ec-f899-4c73-a132-99f7bff87827/vbucks.png">
+    <p>I love money. Money is honestly the best thing in the world. Take a look at this cool thing we can do with the money you're going to give us.</p>
+
+    <h2>Reason 2</h2>
+    <img src="https://image.shutterstock.com/image-illustration/big-pile-money-american-dollar-260nw-526522342.jpg">
+    <p>This is what my bank account will look like after you give me all your money lol.</p>
+
+    <div class="checkout-container"></div>
 
     <script type="text/javascript">
         @if ($config->get("Paddle")['sandbox'])
