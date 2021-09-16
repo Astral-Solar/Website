@@ -2,6 +2,8 @@
 $config = [];
 // Name of app
 $config['App Name'] = "Astral";
+// Slogan
+$config['Slogan'] = "A community worth joining";
 // Debug
 $config['Debug'] = false;
 // Domain
