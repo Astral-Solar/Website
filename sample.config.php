@@ -96,4 +96,22 @@ $config['Forum Thread Permissions'] = [
     ]
 ];
 
+// Store Premium service reasons
+$config['Store Premium Content'] = [
+    [
+        'title' => "Reason 1",
+        'img' => "https://www.cnet.com/a/img/aTLKqWz80LEDLhuX74RcgdKiXMM=/1200x675/2020/02/14/676146ec-f899-4c73-a132-99f7bff87827/vbucks.png",
+        'desc' => "I love money. Money is honestly the best thing in the world. Take a look at this cool thing we can do with the money you're going to give us."
+    ],
+    [
+        'title' => "Reason 2",
+        'img' => "https://image.shutterstock.com/image-illustration/big-pile-money-american-dollar-260nw-526522342.jpg",
+        'desc' => "This is what my bank account will look like after you give me all your money lol."
+    ],
+    [
+        'title' => "Reason 3",
+        'desc' => "This reason has no image. It's because we're too poor to afford one. You can change that by giving us your money. :)"
+    ]
+];
+
 return $config;

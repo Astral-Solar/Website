@@ -12,13 +12,16 @@
 
     <h1>101 reasons to give us money</h1>
 
-    <h2>Reason 1</h2>
-    <img src="https://www.cnet.com/a/img/aTLKqWz80LEDLhuX74RcgdKiXMM=/1200x675/2020/02/14/676146ec-f899-4c73-a132-99f7bff87827/vbucks.png">
-    <p>I love money. Money is honestly the best thing in the world. Take a look at this cool thing we can do with the money you're going to give us.</p>
+    @foreach($config->get('Store Premium Content') as $content)
+        <h2>{{ $content['title'] }}</h2>
+        @if(isset($content['img']))
+            <img src="{{ $content['img'] }}">
+        @endif
+        <p>{{ $content['desc'] }}</p>
+    @endforeach
 
-    <h2>Reason 2</h2>
-    <img src="https://image.shutterstock.com/image-illustration/big-pile-money-american-dollar-260nw-526522342.jpg">
-    <p>This is what my bank account will look like after you give me all your money lol.</p>
+    <h1>Checkout</h1>
+    <p>Here you can buy the cool thing. Just go get your mums credit card and put the numbers in :P</p>
 
     <div class="checkout-container"></div>
 
