@@ -1,4 +1,6 @@
 vendor/*
 .idea/*
 cache/*
+public/fomantic/*
+node_modules/*
 config.php

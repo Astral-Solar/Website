@@ -1,0 +1,22 @@
+{
+  "name": "astral.solar",
+  "version": "1.0.0",
+  "description": "1. A PHP 7.4 server.\r 2. Composer, the PHP package manager\r 3. An SQL database\r 4. A Redis server. PHP extensions may be required\r 5. NodeJS & NPM.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Astral-Solar/Website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Astral-Solar/Website/issues"
+  },
+  "homepage": "https://github.com/Astral-Solar/Website#readme",
+  "dependencies": {
+    "fomantic-ui": "^2.8.8"
+  }
+}
