@@ -1,41 +1,44 @@
 @extends('layouts.app')
 
 @section('title', 'Settings')
-@section('css', '/public/css/settings.css')
-
-@section('header')
-  @include('partials.header')
-@endsection
 
 @section('content')
-  <main class="container">
-    <div class="card m-5">
-      <div class="card-body">
-        <form action="/settings" class="m-3" method="post" enctype="multipart/form-data">
-          <h4>Display Name</h4>
-          <input type="text" class="form-control mb-3" name="display_name" value="{{ $me->GetName() }}" placeholder="my cool display name">
-
-          <h4>Slug</h4>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="slug">https://astral.solar/profile/</span>
-            <input type="text" class="form-control" name="slug" value="{{ $me->GetSlug() }}" placeholder="my cool slug" aria-describedby="slug">
-          </div>
-
-          <h4>Background</h4>
-          <div class="input-group mb-3">
-            <input type="file" name="background" accept="image/png, image/jpeg">
-          </div>
-
-          <h4>Bio</h4>
-          <textarea style="display: none" id="bio_shadow" name="bio"></textarea>
-          <div class="mb-3" style="height: 200px" id="bio_editor">
-          </div>
-
-          <button type="submit" class="btn btn-success" value="Submit">Save Settings</button>
-        </form>
+  <div class="ui inverted dark segment">
+    <form action="/settings" id="settings_form" method="post" enctype="multipart/form-data" class="ui inverted form">
+      <div class="field">
+        <label>Display Name</label>
+        <input type="text" name="display_name" value="{{ $me->GetName() }}" placeholder="Terry">
       </div>
-    </div>
-  </main>
+
+      <div class="field">
+        <label>Slug</label>
+        <div class="ui labeled input">
+          <div class="ui label">
+            https://astral.solar/profile/
+          </div>
+          <input type="text" name="slug" value="{{ $me->GetSlug() }}" placeholder="terry" aria-describedby="slug">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Background</label>
+        <input type="file" name="background" accept="image/png, image/jpeg">
+      </div>
+
+      <div class="field">
+        <label>Bio</label>
+        <textarea style="display: none" id="bio_shadow" name="bio"></textarea>
+        <div class="ui fitted segment">
+          <div style="height: 200px" id="bio_editor">
+          </div>
+        </div>
+      </div>
+
+      <div class="ui error message"></div>
+
+      <button type="submit" class="fluid ui blue button" value="Submit">Save Settings</button>
+    </form>
+  </div>
   <script>
     var quill
     $(document).ready(function () {
@@ -57,5 +60,22 @@
       });
       $('#bio_shadow').val(JSON.stringify(quill.getContents()));
     })
+
+    $('#settings_form')
+      .form({
+        on: 'blur',
+        fields: {
+          display_name: {
+            identifier  : 'display_name',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please provide a display name'
+              }
+            ]
+          },
+        }
+      })
+    ;
   </script>
 @endsection

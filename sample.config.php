@@ -16,6 +16,10 @@ $config['Default Usergroup'] = "user";
 $config['xAdmin Permission Prefix'] = "svr1";
 // The largest size a file uploaded by a user can be, in bytes
 $config['File Size'] = 1e+7;
+// Servers
+$config['Servers'] = [
+    'localhost:27015',
+];
 // Database connection
 $config['Main Database Credentials'] = [
     'host' => '1.1.1.1',
@@ -35,7 +39,10 @@ $config['Paddle'] = [
     'sandbox' => false,
     'vendorID' => '123456',
     'APIKey' => 'APIKey',
-    'productID' => '1234' // The premium product subscription ID
+    'productID' => '1234', // The premium product subscription ID
+    'publicKey' => "-----BEGIN PUBLIC KEY-----
+ABC69==
+-----END PUBLIC KEY-----"
 ];
 // Permissions
 // The base permission nodes

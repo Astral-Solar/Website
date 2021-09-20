@@ -1,0 +1,24 @@
+body {
+    overflow-x: hidden;
+    background-color: #1b1c1d;
+    color: white;
+}
+
+.ui.menu.navbar {
+    background-color: #0f1010;
+}
+
+.ui.inverted.segment.dark {
+    background-color: #0f1010;
+    border: 0;
+}
+
+.masthead {
+    background-image: url("/public/media/backgrounds/1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+
+    margin: 0;
+    height: 600px;
+}

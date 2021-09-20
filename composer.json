@@ -10,6 +10,7 @@
         "robmorgan/phinx": "^0.12.7",
         "envms/fluentpdo": "^2.2",
         "opis/database": "^4.2",
-        "intervention/image": "^2.6"
+        "intervention/image": "^2.6",
+        "xpaw/php-source-query-class": "^2.1"
     }
 }

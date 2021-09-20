@@ -24,6 +24,7 @@ use \PalePurple\RateLimit\Adapter\Redis as RedisAdapter;
 use Opis\Database\Database;
 use Opis\Database\Connection;
 use Intervention\Image\ImageManager;
+use xPaw\SourceQuery\SourceQuery;
 
 // Import other files
 $files = scandir('class/');
@@ -118,9 +119,18 @@ foreach($files as $file) {
 }
 
 // Run some scheduled tasks
-if (!$cache->has("scheduled-tasks")) { // run the scheduled tasks hourly
-    $cache->store("scheduled-tasks", true, 60*60);
-    // Clear expired tags
+if (!$cache->has("scheduled-tasks")) { // run the scheduled tasks often
+    $cache->store("scheduled-tasks", true, 60*10);
+    // Update server info
+
+
+    foreach($config->get('Servers') as $serverIP) {
+        $info = explode(":", $serverIP);
+        $query = new SourceQuery();
+        $query->Connect($info[0], $info[1], 3, SourceQuery::SOURCE);
+
+        $cache->store("server-info-" . $serverIP, $query->GetInfo());
+    }
 }
 
 // Render the current route
