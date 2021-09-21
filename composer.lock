@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fb7f07db6fd133a3d065489500677f5",
+    "content-hash": "d964351f1b7abe6fb7aee0427e7a6bc7",
     "packages": [
         {
             "name": "cakephp/core",
@@ -3283,6 +3283,51 @@
                 }
             ],
             "time": "2020-11-12T00:07:28+00:00"
+        },
+        {
+            "name": "wookieb/relative-date",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wookieb/relative-date.git",
+                "reference": "87a03697f0c9481932b0191f492d7217edfec927"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wookieb/relative-date/zipball/87a03697f0c9481932b0191f492d7217edfec927",
+                "reference": "87a03697f0c9481932b0191f492d7217edfec927",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.4",
+                "symfony/translation": "2.* || 3.*"
+            },
+            "suggest": {
+                "symfony/translation": "Allow to format result using Translator"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wookieb\\RelativeDate\\": "src",
+                    "Wookieb\\RelativeDate\\Tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Łukasz Kużyński 'wookieb'",
+                    "email": "lukasz.kuzynski@gmail.com"
+                }
+            ],
+            "description": "Fully configurable tool to calculate and show date diff in human readable form like \"2 minutes ago\" or \"10 minutes from now\".",
+            "support": {
+                "issues": "https://github.com/wookieb/relative-date/issues",
+                "source": "https://github.com/wookieb/relative-date/tree/master"
+            },
+            "time": "2016-07-24T20:12:26+00:00"
         },
         {
             "name": "xpaw/php-source-query-class",

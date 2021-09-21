@@ -14,7 +14,7 @@
   <div class="ui stackable grid">
 
     <div class="five wide column">
-      <img class="ui centered medium circular image" src="{{ $profileOwner->GetAvatarURL() }}" style="margin-top: -150px">
+      <img class="ui centered medium circular image" src="{{ $profileOwner->GetAvatar() }}" style="margin-top: -150px">
       <h1 class="ui inverted center aligned header" style="margin-top: 5px">
         {{ $profileOwner->GetName() }}
         <div class="sub header">{{ $profileOwner->GetSteamID64() }}</div>

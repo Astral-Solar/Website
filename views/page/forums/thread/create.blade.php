@@ -4,18 +4,26 @@
 
 @section('content')
 
-    <form action="/forums/boards/{{ $masterBoard->GetID() }}/thread/create" method="post">
-        <h2>Title</h2>
-        <input type="text" name="title" placeholder="My cool thread!">
+    <form id="create_thread_form" action="/forums/boards/{{ $masterBoard->GetID() }}/thread/create" method="post" class="ui inverted form">
+        <div class="ui inverted top attached dark segment">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="My cool thread!">
+            </div>
 
-        <h2>Content</h2>
-        <textarea style="display: none" id="content_shadow" name="content"></textarea>
-        <div id="content_editor">
+            <div class="field">
+                <label>Content</label>
+                <textarea style="display: none" id="content_shadow" name="content"></textarea>
+                <div class="ui fitted segment">
+                    <div id="content_editor">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui error message"></div>
+
         </div>
-
-
-        <h2>Submit</h2>
-        <button type="submit" value="Submit">Submit</button>
+        <button type="submit" class="fluid ui bottom attached green button" value="Submit">Create Thread</button>
     </form>
 
     <style>
@@ -45,5 +53,23 @@
             });
             $('#content_shadow').val(JSON.stringify(quill.getContents()));
         })
+
+
+
+        $('#create_thread_form')
+            .form({
+                on: 'blur',
+                fields: {
+                    display_name: {
+                        identifier  : 'title',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please provide a title for this thread!'
+                            }
+                        ]
+                    },
+                }
+            })
     </script>
 @endsection

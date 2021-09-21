@@ -12,6 +12,14 @@ body {
     background-color: #0f1010;
     border: 0;
 }
+.ui.top.attached.dark {
+    background-color: #060707;
+    border: 0;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
 
 .ui.tabular.menu.inverted .item {
     background-color: #0f1010;

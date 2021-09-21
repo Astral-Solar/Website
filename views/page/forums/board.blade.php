@@ -66,14 +66,14 @@
                 <div class="item">
                     <div class="right floated content">
                         @if($thread->GetLastPost())
-                            <img class="ui avatar right floated image" src="{{ $thread->GetLastPost()->GetCreator()->GetAvatarURL() }}">
+                            <img class="ui avatar right floated image" src="{{ $thread->GetLastPost()->GetCreator()->GetAvatar() }}">
                         @endif
-                        <h3 class="ui right floated header">
+                        <h3 class="ui right aligned floated header">
                             {{ $thread->GetLastPost()->GetCreator()->GetName() }}
                             <div class="sub header">{{ $formatter->format($calculator->compute($lastPostDate)) }}</div>
                         </h3>
                     </div>
-                    <img class="ui avatar image" src="{{ $thread->GetCreator()->GetAvatarURL() }}">
+                    <img class="ui avatar image" src="{{ $thread->GetCreator()->GetAvatar() }}">
                     <div class="content">
                         <h3 class="ui header"><a href="/forums/threads/{{ $thread->GetID() }}">
                                 @if($thread->IsLocked())

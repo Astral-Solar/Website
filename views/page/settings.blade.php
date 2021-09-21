@@ -3,8 +3,8 @@
 @section('title', 'Settings')
 
 @section('content')
-  <div class="ui inverted dark segment">
-    <form action="/settings" id="settings_form" method="post" enctype="multipart/form-data" class="ui inverted form">
+  <form action="/settings" id="settings_form" method="post" enctype="multipart/form-data" class="ui inverted form">
+    <div class="ui inverted top attached dark segment">
       <div class="field">
         <label>Display Name</label>
         <input type="text" name="display_name" value="{{ $me->GetName() }}" placeholder="Terry">
@@ -35,10 +35,9 @@
       </div>
 
       <div class="ui error message"></div>
-
-      <button type="submit" class="fluid ui blue button" value="Submit">Save Settings</button>
-    </form>
-  </div>
+    </div>
+    <button type="submit" class="fluid ui bottom attached blue button" value="Submit">Save Settings</button>
+  </form>
   <script>
     var quill
     $(document).ready(function () {
