@@ -11,19 +11,22 @@
     <!-- Loop all the master boards -->
     <!-- Would be cool to do something like this: https://forum.facepunch.com/ -->
     @foreach($allBoards as $board)
-        <!-- The title -->
-        <h1>{{ $board->GetName() }}</h1>
-        <!-- The Description -->
-        <h2>{{ $board->GetDescription() }}</h2>
-        <!-- The Image -->
-        @if($board->GetImage())
-            <img src="{{ $board->GetImage() }}">
-        @endif
-        <!-- All the child boards that should be listed inside the master board -->
-        Children:
-        @foreach($board->GetChildren() as $child)
-            <a href="forums/boards/{{ $child->GetID() }}"><h3>{{ $child->GetName() }}</h3></a>
-        @endforeach
-        <hr/>
+        <h2 class="ui top attached inverted dark header" @if($board->GetImage()) style="background-image: url('{{ $board->GetImage() }}')" @endif>
+            {{ $board->GetName() }}
+            <div class="sub header">{{ $board->GetDescription() }}</div>
+        </h2>
+        <div class="ui attached inverted dark segment" style="margin-bottom: 20px;">
+            <div class="ui relaxed divided inverted list">
+                @foreach($board->GetChildren() as $child)
+                    <div class="item">
+                        <div class="content">
+                            <a class="header" href="forums/boards/{{ $child->GetID() }}">{{ $child->GetName() }}</a>
+                            {{ $child->GetDescription() }}
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
     @endforeach
 @endsection
