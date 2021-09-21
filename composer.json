@@ -11,6 +11,7 @@
         "envms/fluentpdo": "^2.2",
         "opis/database": "^4.2",
         "intervention/image": "^2.6",
-        "xpaw/php-source-query-class": "^2.1"
+        "xpaw/php-source-query-class": "^2.1",
+        "wookieb/relative-date": "^0.1.0"
     }
 }
