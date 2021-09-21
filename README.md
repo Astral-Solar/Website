@@ -13,9 +13,9 @@
 3. Create a `cache` folder in the root directory, permissions may need to be changed.
 4. Run `php vendor/bin/phinx migrate` in the root directory.
 5. Run `php vendor/bin/phinx seed:run` in the root directory.
-6. Run `npm insall`. 
+6. Run `npm install`. 
 7. Run `npm install -g gulp`.
-8. Run `cd node_modules\fomantic-ui`.
+8. Run `cd node_modules/fomantic-ui`.
 9. Run `npx gulp build`.
 10. Start up the Redis & SQL server.
 11. Profit?
@@ -40,5 +40,10 @@
 ### ImageMagick module not available with this PHP installation.
 [Likely redundant issue] Fix: Put `extension=imagick.so` in your php.ini file. (https://stackoverflow.com/questions/46824621/imagemagick-module-not-available-with-this-php-installation-on-laravel-5-4-with)
 
+### ImageMagick module not available with this PHP installation.
+Fix: `sudo apt-get install php-imagick`
+
+
 ### The openssl extension is required for SSL/TLS protection but is not available.
 Fix: OpenSSL needs to be enabled in php.ini. Likely multiple packages need enabling
+

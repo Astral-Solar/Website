@@ -35,7 +35,7 @@ foreach($files as $file) {
 require_once('handler/session.php');
 
 // Set up Image stuff
-$imageHandler = new ImageManager(array('driver' => 'GD'));
+$imageHandler = new ImageManager(array('driver' => $config->get("Image Write Type")));
 
 // Load the router object
 $klein = new \Klein\Klein();
