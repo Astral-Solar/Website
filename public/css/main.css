@@ -13,11 +13,25 @@ body {
     border: 0;
 }
 
+.ui.tabular.menu.inverted .item {
+    background-color: #0f1010;
+    color: white;
+}
+
+.ui.segment.banner {
+    min-height: 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    margin-top: -1rem;
+}
+
 .masthead {
     background-image: url("/public/media/backgrounds/1.jpg");
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
+    background-size: cover;
 
     margin: 0;
     height: 600px;

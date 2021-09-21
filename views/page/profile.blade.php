@@ -2,32 +2,49 @@
 
 @section('title', $profileOwner->GetName() . "'s Profile")
 
-@section('content')
-  {{ $profileOwner->GetName() }}
-  <b>Steam ID:</b> {{ $profileOwner->GetSteamID64() }}
-  Profile
-  Forums
-  Servers
-  @if($profileOwner->GetBio())
-    <div class="card-body" id="bioViewer">
+@section('header')
+    <div class="ui basic segment banner" style='background-image: url("{{ $me->GetBackground() }}");'>
+      <p></p>
     </div>
-  @endif
+@endsection
+
+@section('content')
 
 
-  <div class="ui top attached tabular menu">
-    <a class="item active" data-tab="first">Profile</a>
-    <a class="item" data-tab="second">Forums</a>
-    <a class="item" data-tab="third">Servers</a>
+  <div class="ui stackable grid">
+
+    <div class="five wide column">
+      <img class="ui centered medium circular image" src="{{ $profileOwner->GetAvatarURL() }}" style="margin-top: -150px">
+      <h1 class="ui inverted center aligned header" style="margin-top: 5px">
+        {{ $profileOwner->GetName() }}
+        <div class="sub header">{{ $profileOwner->GetSteamID64() }}</div>
+      </h1>
+    </div>
+
+    <div class="eleven wide column">
+      <div class="ui top attached tabular inverted menu">
+        <a class="item active" data-tab="first">Profile</a>
+        <a class="item" data-tab="second">Forums</a>
+        <a class="item" data-tab="third">Servers</a>
+      </div>
+      <div class="ui bottom attached tab inverted dark segment active" data-tab="first">
+        @if($profileOwner->GetBio())
+          <div class="card-body" id="bioViewer">
+          </div>
+        @else
+          <p>This user has no bio, encourage them to make one!</p>
+        @endif
+      </div>
+      <div class="ui bottom attached tab inverted dark segment" data-tab="second">
+        Second
+      </div>
+      <div class="ui bottom attached tab inverted dark segment" data-tab="third">
+        Third
+      </div>
+    </div>
+
   </div>
-  <div class="ui bottom attached tab segment active" data-tab="first">
-    First
-  </div>
-  <div class="ui bottom attached tab segment" data-tab="second">
-    Second
-  </div>
-  <div class="ui bottom attached tab segment" data-tab="third">
-    Third
-  </div>
+
 
   <script>
     var quill;

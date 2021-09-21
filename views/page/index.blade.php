@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-    <div class="ui three column centered grid">
+    <div class="ui stackable three column centered grid">
         @foreach($config->get('Servers') as $serverIP)
             @php
                 $serverData = $cache->get("server-info-" . $serverIP);
