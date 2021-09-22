@@ -21,6 +21,12 @@ body {
     background-size: cover;
 }
 
+.ui.inverted.card.dark {
+    background-color: #0f1010;
+    border: none;
+    -webkit-box-shadow: none;
+}
+
 .ui.tabular.menu.inverted .item {
     background-color: #0f1010;
     color: white;
