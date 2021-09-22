@@ -61,7 +61,7 @@
 
 <body>
   @include('partials.navigation')
-  <div class="ui container" style="margin-top: 20px; margin-bottom: 20px;">
+  <div class="ui container" style="margin-top: 20px; padding-bottom: 5px;">
     @yield('content')
   </div>
 </body>
