@@ -156,6 +156,7 @@ class Thread
         global $databaseMain;
 
         $results = $databaseMain->from('forums_threads_posts')
+            ->orderBy('created', 'DESC')
             ->where('thread_id')->is($this->GetID())
             ->select()
             ->all();
@@ -175,6 +176,7 @@ class Thread
         global $databaseMain;
 
         $results = $databaseMain->from('forums_threads_posts')
+            ->orderBy('created', 'DESC')
             ->where('thread_id')->is($this->GetID())
             ->select()
             ->first();
