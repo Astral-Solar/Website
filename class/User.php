@@ -201,6 +201,34 @@ class User
 
         return $posts;
     }
+    public function GetSubscription() {
+        if (!$this->exists) return;
+
+        $subscription = new Premium($this->GetSteamID64());
+
+        return $subscription->exists ? $subscription : false;
+    }
+
+    public function GetMaintainedSubscriptions() {
+        if (!$this->exists) return;
+        global $databaseMain;
+        global $config;
+
+        $results = $databaseMain->from("subscriptions")
+            ->where('subscriber')->is($this->GetSteamID64())
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+
+        $subscriptions = [];
+        foreach($results as $subs) {
+            $subs = new Premium($subs->userid);
+            array_push($subscriptions, $subs);
+        }
+
+        return $subscriptions;
+    }
 
 
     // Permissions
@@ -253,5 +281,24 @@ class User
         if (!$results) return;
 
         return new User($results->userid);
+    }
+    public function FindAllByWord($any) {
+        global $databaseMain;
+
+        $results = $databaseMain->from('users')
+            ->where('name')->like('%' . $any . '%')
+            ->orWhere('userid')->like('%' . $any . '%')
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+
+        $users = [];
+        foreach($results as $user) {
+            $userOjb = new User($user->userid);
+            array_push($users, $userOjb);
+        }
+
+        return $users;
     }
 }
