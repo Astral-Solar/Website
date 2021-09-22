@@ -3,9 +3,11 @@
 @section('title', $profileOwner->GetName() . "'s Profile")
 
 @section('header')
-    <div class="ui basic segment banner" style='background-image: url("{{ $me->GetBackground() }}");'>
+  @if($profileOwner->GetBackground())
+    <div class="ui basic segment banner" style='background-image: url("{{ $profileOwner->GetBackground() }}");'>
       <p></p>
     </div>
+  @endif
 @endsection
 
 @section('content')

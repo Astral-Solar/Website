@@ -128,8 +128,6 @@ class Board
     public function GetImage() {
         if (!$this->exists) return;
 
-        global $imageHandler;
-
         if(!file_exists('public/storage/forums/' . $this->GetID() . '.jpg')) return false;
 
         return '/public/storage/forums/' . $this->GetID() . '.jpg';
