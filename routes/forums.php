@@ -17,7 +17,7 @@ $klein->respond('GET', '/forums/boards/[i:boardID]', function ($request, $respon
         die();
     }
     if (!$me->HasPermission($board->GetID() . ':forums.thread.%')) {
-        $response->code(403);
+        $response->redirect("/forums", 403);
         $response->send();
         die();
     }
