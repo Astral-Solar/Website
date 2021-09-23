@@ -51,12 +51,14 @@
   <script>
     var quill;
     var data;
-    $(document).ready(function () {
-      quill = new Quill('#bioViewer', {});
-      data = <?= $profileOwner->GetBio() ?>; // Maybe you can XXS with this?
-      quill.setContents(data);
-      quill.enable(false);
-    });
+    @if($profileOwner->GetBio())
+      $(document).ready(function () {
+        quill = new Quill('#bioViewer', {});
+        data = <?= $profileOwner->GetBio() ?>; // Maybe you can XXS with this?
+        quill.setContents(data);
+        quill.enable(false);
+      });
+    @endif
 
 
 
