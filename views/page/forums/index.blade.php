@@ -11,6 +11,9 @@
     <!-- Loop all the master boards -->
     <!-- Would be cool to do something like this: https://forum.facepunch.com/ -->
     @foreach($allBoards as $board)
+        @if(!$me->HasPermission($board->GetID() . ':forums.thread.%'))
+            @continue
+        @endif
         <h2 class="ui top attached inverted dark header" @if($board->GetImage()) style="background-image: url('{{ $board->GetImage() }}')" @endif>
             {{ $board->GetName() }}
             <div class="sub header">{{ $board->GetDescription() }}</div>
