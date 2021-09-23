@@ -6,8 +6,8 @@
     <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
     @php
-        $recieverID = $_GET['receiver'] ?? $me->GetSteamID64();
-        $reciever = new User($recieverID);
+        $receiverID = $_GET['receiver'] ?? $me->GetSteamID64();
+        $receiver = new User($receiverID);
     @endphp
 
     <h2 class="ui top attached inverted dark header">
@@ -42,6 +42,14 @@
         Start a new subscription
     </h2>
     <div class="ui attached inverted dark segment">
+        @if($receiver->GetSubscription())
+            <div class="ui inverted negative message">
+                <div class="header">
+                    {{ $receiver->GetName() }} already has an active subscription!
+                </div>
+                <p>You cannot purchase a subscription for this user as they already have one!</p>
+            </div>
+        @endif
         <p>Start a new monthly subscription for Premium. This membership is 5 GBP a month and can be cancelled at <b>any time</b>.</p>
 
         <div class="ui divider"></div>
@@ -49,12 +57,12 @@
         <h1 class="ui header">Total: £5/month
             <div class="sub header">
                 Purchasing for:
-                <img class="ui avatar image" src="{{ $reciever->GetAvatar() }}">
-                <a id="purchase-user" target="_blank" data-steamid="{{ $reciever->GetSteamID64() }}" href="/profile/{{ $reciever->GetSteamID64() }}">{{ $reciever->GetName() }} ({{ $reciever->GetSteamID64() }})</a>
+                <img class="ui avatar image" src="{{ $receiver->GetAvatar() }}">
+                <a id="purchase-user" target="_blank" data-steamid="{{ $receiver->GetSteamID64() }}" href="/profile/{{ $receiver->GetSteamID64() }}">{{ $receiver->GetName() }} ({{ $receiver->GetSteamID64() }})</a>
             </div>
         </h1>
 
-        <p>Cancel any time, simply come back to this page and you can manage your subscriptions! There is no cancel fee, and you get to keep your Premium perks till the end of your expected subscription time.</p>
+        <p>Cancel any time, simply come back to this page and you can manage your subscriptions! There is no cancel fee, and you get to keep your Premium perks till the end of your expected subscription period. (If you subscribed on the 2nd and cancelled on the 12th, you would keep your subscription perks till the 2nd of the following month)</p>
 
         <div class="ui divider"></div>
 
@@ -84,35 +92,41 @@
             </div>
         </div>
     </div>
-    <a class="fluid ui green animated fade attached bottom button" tabindex="0"  href="#!" id="open-checkout">
-        <div class="visible content">Purchase for £5/month</div>
+    <a class="fluid ui {{ $receiver->GetSubscription() ? 'red' :'green' }} animated fade attached bottom button" tabindex="0" id="open-checkout">
+        <div class="visible content">{{ $receiver->GetSubscription() ? 'This user already has a subscription!' :'Purchase for £5/month' }}</div>
         <div class="hidden content">
-            <i class="shop icon icon"></i>
+            <i class="{{ $receiver->GetSubscription() ? 'hand paper' :'shop' }} icon"></i>
         </div>
     </a>
 
-    <h1>Manage your existing subscriptions</h1>
-    <table class="ui single line inverted table">
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Status</th>
-                <th>Started</th>
-                <th>Next Bill</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($me->GetMaintainedSubscriptions() as $subs)
+    @if($me->GetMaintainedSubscriptions())
+        <h1>Manage your existing subscriptions</h1>
+        <table class="ui single line inverted table">
+            <thead>
                 <tr>
-                    <td>{{ $subs->GetUser()->GetName() }}</td>
-                    <td>{{ ucwords($subs->GetStatus()) }}</td>
-                    <td>{{ $subs->GetStarted() }}</td>
-                    <td>{{ $subs->GetNextBillDate() }}</td>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Started (D/M/Y)</th>
+                    <th>Next Bill (D/M/Y)</th>
+                    <th>Actions</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($me->GetMaintainedSubscriptions() as $sub)
+                    <tr>
+                        <td>{{ $sub->GetUser()->GetName() }}</td>
+                        <td>{{ ucwords($sub->GetStatus()) }}</td>
+                        <td>{{ gmdate("d/m/Y", $sub->GetStarted()) }}</td>
+                        <td>{{ gmdate("d/m/Y", $sub->GetNextBillDate()) }}</td>
+                        <td>
+                            <a class="ui orange basic button" href="{{ $sub->GetUpdateURL() }}">Edit</a>
+                            <a class="ui pink basic button" href="{{ $sub->GetCancelURL() }}">Cancel</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 
 
     <script type="text/javascript">
@@ -123,13 +137,16 @@
 
         function openCheckout() {
             // if(!$('tos_agree'))
+            @if($receiver->GetSubscription())
+            if (true) return;
+            @endif
 
             if(!$('#tos_agree').is(':checked')) return;
             if(!$('#pp_agree').is(':checked')) return;
 
             Paddle.Checkout.open({
                 product: {{ $config->get('Paddle')['productID'] }},
-                passthrough: '{!! json_encode(['subscriber' => $me->GetSteamID64(), 'user' => $reciever->GetSteamID64()]) !!}'
+                passthrough: '{!! json_encode(['subscriber' => $me->GetSteamID64(), 'user' => $receiver->GetSteamID64()]) !!}'
             });
         }
         document.getElementById('open-checkout').addEventListener('click', openCheckout, false)

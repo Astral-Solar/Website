@@ -123,6 +123,16 @@ class Premium
 
         return $this->started;
     }
+    public function GetCancelURL() {
+        if (!$this->exists) return;
+
+        return $this->cancelURL;
+    }
+    public function GetUpdateURL() {
+        if (!$this->exists) return;
+
+        return $this->updateURL;
+    }
 
     // Other stuff
     public function LogRequest($data)
