@@ -208,7 +208,6 @@ class User
 
         return $subscription->exists ? $subscription : false;
     }
-
     public function GetMaintainedSubscriptions() {
         if (!$this->exists) return;
         global $databaseMain;
@@ -228,6 +227,46 @@ class User
         }
 
         return $subscriptions;
+    }
+
+    // Discord stuff
+    public function LinkDiscord($discordID, $name, $avatarHash) {
+        if (!$this->exists) return;
+        global $databaseMain;
+        global $config;
+        global $imageHandler;
+
+        $databaseMain->insert(array(
+            'userid' => $this->GetSteamID64(),
+            'discord_id' => $discordID,
+            'name' => $name,
+            'created' => time()
+        ))->into('users_discord');
+
+
+        $img = $imageHandler->make("https://cdn.discordapp.com/avatars/$discordID/$avatarHash.jpg");
+        $img->save('public/storage/discord/' . $discordID . '.jpg');
+
+        $message = (new \Woeler\DiscordPhp\Message\DiscordEmbedMessage())
+            ->setTitle('New Account Linked')
+            ->addField('Steam', '[' . $this->GetName() . '](' . $config->get('Domain') . '/profile/' . $this->GetSteamID64() . ') (' . $this->GetSteamID64() . ')')
+            ->addField('Discord', $name . ' (<@' . $discordID . '>)');
+
+        $webhook = new \Woeler\DiscordPhp\Webhook\DiscordWebhook($config->get('Discord')['verifyWebhook']);
+        $webhook->send($message);
+    }
+    public function GetLinkedDiscord() {
+        if (!$this->exists) return false;
+        global $databaseMain;
+
+
+        $results = $databaseMain->from("users_discord")
+            ->where('userid')->is($this->GetSteamID64())
+            ->select()
+            ->first();
+        if (!$results) return false;
+
+        return $results;
     }
 
 

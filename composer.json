@@ -12,6 +12,9 @@
         "opis/database": "^4.2",
         "intervention/image": "^2.6",
         "xpaw/php-source-query-class": "^2.1",
-        "wookieb/relative-date": "^0.1.0"
+        "wookieb/relative-date": "^0.1.0",
+        "wohali/oauth2-discord-new": "^1.1",
+        "restcord/restcord": "dev-develop",
+        "woeler/phpdiscord": "^3.0"
     }
 }

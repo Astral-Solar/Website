@@ -46,6 +46,18 @@ $config['Paddle'] = [
 ABC69==
 -----END PUBLIC KEY-----"
 ];
+// Discord
+$config['Discord'] = [
+    'clientID' => 'CLIENTID',
+    'clientSecret' => 'CLIENTSECRET',
+    'botToken' => 'BOT_TOKEN',
+    'guildID' => 'GUILDID',
+    'roles' => [
+        'verified' => 'VERIFIEDROLE',
+        'premium' => 'PREMIUMROLE'
+    ],
+    'verifyWebhook' => 'https://WEBHOOK.URL/a/b/c'
+];
 // Permissions
 // The base permission nodes
 $config['Permissions'] = [

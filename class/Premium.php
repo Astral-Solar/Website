@@ -43,6 +43,7 @@ class Premium
 
     public function Create($userID, $subscriber, $cancelURL, $updateURL, $nextBill) {
         global $databaseMain;
+        global $config;
 
         $databaseMain->insert(array(
                 'userid' => $userID,
@@ -56,15 +57,43 @@ class Premium
             ))
             ->into('subscriptions');
 
+
+
+        $user = new User($userID);
+        if($user->exists and $user->GetLinkedDiscord()) {
+            $restCord = new \RestCord\DiscordClient([
+                'token' => $config->get('Discord')['botToken']
+            ]);
+
+            $restCord->guild->addGuildMemberRole([
+                'guild.id' => intval($config->get('Discord')['guildID']),
+                'user.id' => intval($user->GetLinkedDiscord()->discord_id),
+                'role.id' => $config->get('Discord')['roles']['premium']
+            ]);
+        }
+
         return new Premium($userID);
     }
     public function Delete() {
         if (!$this->exists) return;
         global $databaseMain;
+        global $config;
 
         $databaseMain->from('subscriptions')
             ->where('id')->is($this->GetID())
             ->delete();
+
+        if($this->GetUser()->exists and $this->GetUser()->GetLinkedDiscord()) {
+            $restCord = new \RestCord\DiscordClient([
+                'token' => $config->get('Discord')['botToken']
+            ]);
+
+            $restCord->guild->removeGuildMemberRole([
+                'guild.id' => intval($config->get('Discord')['guildID']),
+                'user.id' => intval($this->GetUser()->GetLinkedDiscord()->discord_id),
+                'role.id' => $config->get('Discord')['roles']['premium']
+            ]);
+        }
     }
 
     // Get/Set Methods
