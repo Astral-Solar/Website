@@ -10,6 +10,7 @@
             <a class="item" href="/store/premium">Go Premium</a>
         </div>
     </div>
+    <a class="item" href="/members">Members</a>
 
 
     <div class="right menu">

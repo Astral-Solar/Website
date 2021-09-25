@@ -327,6 +327,24 @@ class User
         $results = $databaseMain->from('users')
             ->where('name')->like('%' . $any . '%')
             ->orWhere('userid')->like('%' . $any . '%')
+            ->orWhere('slug')->like('%' . $any . '%')
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+
+        $users = [];
+        foreach($results as $user) {
+            $userOjb = new User($user->userid);
+            array_push($users, $userOjb);
+        }
+
+        return $users;
+    }
+    public function GetAll() {
+        global $databaseMain;
+
+        $results = $databaseMain->from('users')
             ->select()
             ->all();
         if (!$results) return [];

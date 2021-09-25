@@ -13,8 +13,8 @@
 3. Create a `cache` folder in the root directory, permissions may need to be changed.
 4. Run `php vendor/bin/phinx migrate` in the root directory.
 5. Run `php vendor/bin/phinx seed:run` in the root directory.
-6. Run `npm install`. 
-7. Run `npm install -g gulp`.
+6. Run `npm install -g gulp`.
+7. Run `npm install`. 
 8. Run `cd node_modules/fomantic-ui`.
 9. Run `npx gulp build`.
 10. Start up the Redis & SQL server.

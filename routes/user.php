@@ -27,6 +27,10 @@ $klein->respond('GET', '/settings', function ($request, $response) use ($blade, 
 });
 
 
+$klein->respond('GET', '/members', function () use ($blade, $me, $config, $cache) {
+    return $blade->make('page.members', ['me' => $me, 'config' => $config, 'cache' => $cache])->render();
+});
+
 /*
  * POST
  */
