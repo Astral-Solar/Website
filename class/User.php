@@ -149,7 +149,7 @@ class User
     public function GetBackground() {
         if (!$this->exists) return;
 
-        if(!file_exists('public/storage/backgrounds/' . $this->GetSteamID64() . '.jpg')) return false;
+        if(!file_exists('public/storage/backgrounds/' . $this->GetSteamID64() . '.jpg')) return '/public/media/backgrounds/2.jpg';
 
         return "/public/storage/backgrounds/" . $this->GetSteamID64() . ".jpg";
         //return $this->background;
