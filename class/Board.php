@@ -200,4 +200,22 @@ class Board
 
         return $boards;
     }
+    public function GetRecentActivity() {
+        global $databaseMain;
+
+        $results = $databaseMain->from('forums_threads_posts')
+            ->limit(5)
+            ->orderBy('created', 'DESC')
+            ->select()
+            ->all();
+        if (!$results) return [];
+
+        $posts = [];
+        foreach($results as $post) {
+            $postOjb = new ThreadPost($post->id);
+            array_push($posts, $postOjb);
+        }
+
+        return $posts;
+    }
 }
