@@ -32,9 +32,9 @@
 
   <link rel="stylesheet" href="{{ $config->get('Domain') }}/public/css/main.css" type="text/css">
 
-  <script src="{{ $config->get('Domain') }}/public/js/quill_toolbar.js"></script>
   <script src="{{ $config->get('Domain') }}/public/js/quill.min.js"></script>
   <link href="{{ $config->get('Domain') }}/public/js/quill.snow.css" rel="stylesheet">
+  <script src="{{ $config->get('Domain') }}/public/js/quill_toolbar.js"></script>
 
   <script>
     $(document)
