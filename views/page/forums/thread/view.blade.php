@@ -50,7 +50,7 @@
             <img class="ui avatar image" src="{{ $post->GetCreator()->GetAvatar() }}">
 
             <div class="content">
-                {{ $post->GetCreator()->GetName() }}
+                <a href="/profile/{{ $post->GetCreator()->GetSteamID64() }}">{{ $post->GetCreator()->GetName() }}</a>
                 <div class="sub header">{{ $formatter->format($calculator->compute($createdDate)) }}</div>
             </div>
         </h2>

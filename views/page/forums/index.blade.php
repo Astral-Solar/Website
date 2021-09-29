@@ -52,8 +52,8 @@
                         <div class="item">
                             <img class="ui avatar left floated image" src="{{ $post->GetCreator()->GetAvatar() }}">
                             <h3 class="ui header">
-                                {{ $post->GetThread()->GetTitle() }}
-                                <div class="sub header">{{ $post->GetCreator()->GetName() }} - {{ $formatter->format($calculator->compute($postDate)) }}</div>
+                                <a href="/forums/threads/{{ $post->GetThread()->GetID() }}">{{ $post->GetThread()->GetTitle() }}</a>
+                                <div class="sub header"><a href="/profile/{{ $post->GetCreator()->GetSteamID64() }}">{{ $post->GetCreator()->GetName() }}</a> - {{ $formatter->format($calculator->compute($postDate)) }}</div>
                             </h3>
                         </div>
                     @endforeach
