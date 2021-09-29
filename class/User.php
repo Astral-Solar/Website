@@ -7,7 +7,7 @@ class User
     private $id;
     private $steamID;
     private $name;
-    private $avatarURL;
+    private $avatar;
     private $background;
     private $slug;
     private $bio;
@@ -34,7 +34,7 @@ class User
 
         $this->id = $userData->id;
         $this->name = $userData->name;
-        $this->avatarURL = $userData->avatar;
+        $this->avatar = $userData->avatar;
         $this->background = $userData->background or false;
         $this->slug = $userData->slug or false;
         $this->bio = $userData->bio or false;
@@ -44,17 +44,20 @@ class User
 
     public function Create($id, $name, $avatar){
         global $databaseMain;
+
+        $avatarHash = GenerateRandomString(30);
+
         $databaseMain->insert(array(
             'userid' => $id,
             'name' => $name,
-            'avatar' => $avatar,
+            'avatar' => $avatarHash,
             'lastseen' => time(),
             'joined' => time()
         ))->into('users');
 
         global $imageHandler;
         $img = $imageHandler->make($avatar);
-        $img->save('public/storage/avatar/' . $id . '.jpg');
+        $img->save('public/storage/avatar/' . $avatarHash . '.jpg');
 
         return new User($id);
     }
@@ -121,15 +124,15 @@ class User
                 'name' => $name
             ]);
     }
-    public function GetAvatarURL() {
+    private function GetAvatarHash() {
         if (!$this->exists) return;
 
-        return $this->avatarURL;
+        return $this->avatar;
     }
     public function GetAvatar() {
         if (!$this->exists) return;
 
-        return '/public/storage/avatar/' . $this->GetSteamID64() . '.jpg';
+        return '/public/storage/avatar/' . $this->GetAvatarHash() . '.jpg';
     }
     public function GetSlug() {
         if (!$this->exists) return;
@@ -146,17 +149,29 @@ class User
                 'slug' => $slug
             ]);
     }
+
+    private function GetBackgroundHash() {
+        if (!$this->exists) return;
+
+        if(!$this->background) return false;
+
+        return $this->background;
+    }
+
     public function GetBackground() {
         if (!$this->exists) return;
 
-        if(!file_exists('public/storage/backgrounds/' . $this->GetSteamID64() . '.jpg')) return '/public/media/backgrounds/2.jpg';
+        if(!$this->GetBackgroundHash()) return '/public/media/backgrounds/2.jpg';
 
-        return "/public/storage/backgrounds/" . $this->GetSteamID64() . ".jpg";
-        //return $this->background;
+        return "/public/storage/backgrounds/" . $this->GetBackgroundHash() . ".jpg";
     }
     public function SetBackground($background) {
         if (!$this->exists) return;
         global $databaseMain;
+
+        if ($this->GetBackgroundHash()) unlink('public/storage/backgrounds/' . $this->GetBackgroundHash() . '.jpg');
+
+        $this->background = $background;
 
         $databaseMain->update('users')
             ->where('id')->is($this->GetID())

@@ -36,6 +36,8 @@ $klein->respond('GET', '/members', function () use ($blade, $me, $config, $cache
  */
 
 $klein->respond('POST', '/settings', function ($request, $response, $service) use ($blade, $me, $steam, $config) {
+    require_once 'resource/common.php';
+
     if (!$me->exists) {
         $response->code(403);
         $response->send();
@@ -85,9 +87,10 @@ $klein->respond('POST', '/settings', function ($request, $response, $service) us
     $me->SetName($displayName);
     $me->SetBio($bio);
     if ($background) {
-        echo "Cool background bro";
-        $img->save('public/storage/backgrounds/' . $me->GetSteamID64() . '.jpg');
-//        $me->SetBackground($background);
+        $backgroundHash = GenerateRandomString(30);
+
+        $img->save('public/storage/backgrounds/' . $backgroundHash . '.jpg');
+        $me->SetBackground($backgroundHash);
     }
     $me->SetSlug($slug);
 
