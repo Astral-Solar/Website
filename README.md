@@ -1,5 +1,9 @@
 # Astral Website
 
+## Note
+This was originally going to be a complete suite for a community I was working on. I have since stopped working on that community, and it seems a waste to have this repo sit private. This project is running a custom PHP stack based on Laravel with a themed version of Fomantic UI for the front end. Feel free to learn from it or something.
+
+
 ## Requirements
 1. A PHP 7.4 server.
 2. Composer, the PHP package manager
@@ -11,14 +15,15 @@
 1. Rename and configure config.php.
 2. Run `composer install`.
 3. Create a `cache` folder in the root directory, permissions may need to be changed.
-4. Run `php vendor/bin/phinx migrate` in the root directory.
-5. Run `php vendor/bin/phinx seed:run` in the root directory.
-6. Run `npm install -g gulp`.
-7. Run `npm install`. 
-8. Run `cd node_modules/fomantic-ui`.
-9. Run `npx gulp build`.
-10. Start up the Redis & SQL server.
-11. Profit?
+4. Rename `sample.config.php` to `config.php` and configure it.
+5. Run `php vendor/bin/phinx migrate` in the root directory.
+6. Run `php vendor/bin/phinx seed:run` in the root directory.
+7. Run `npm install -g gulp`.
+8. Run `npm install`. 
+9. Run `cd node_modules/fomantic-ui`.
+10. Run `npx gulp build`.
+11. Start up the Redis & SQL server.
+12. Profit?
 
 ## Migrations
 
