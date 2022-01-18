@@ -16,7 +16,7 @@ $config['Default Usergroup'] = "user";
 $config['xAdmin Permission Prefix'] = "svr1";
 // The largest size a file uploaded by a user can be, in bytes
 $config['File Size'] = 1e+7;
-// Image Write Type
+// Image Write Type. This can either be GD or imagick
 $config['Image Write Type'] = 'imagick';
 // Servers
 $config['Servers'] = [
