@@ -210,8 +210,8 @@ class User
 
         $posts = [];
         foreach($results as $post) {
-            $postOjb = new ThreadPost($post->id);
-            array_push($posts, $postOjb);
+            $postObj = new ThreadPost($post->id);
+            array_push($posts, $postObj);
         }
 
         return $posts;
@@ -350,8 +350,8 @@ class User
 
         $users = [];
         foreach($results as $user) {
-            $userOjb = new User($user->userid);
-            array_push($users, $userOjb);
+            $userObj = new User($user->userid);
+            array_push($users, $userObj);
         }
 
         return $users;
@@ -367,8 +367,8 @@ class User
 
         $users = [];
         foreach($results as $user) {
-            $userOjb = new User($user->userid);
-            array_push($users, $userOjb);
+            $userObj = new User($user->userid);
+            array_push($users, $userObj);
         }
 
         return $users;

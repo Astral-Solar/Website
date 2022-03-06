@@ -145,8 +145,8 @@ class Group
 
         $groups = [];
         foreach($results as $group) {
-            $groupOjb = new Group($group->identifier);
-            array_push($groups, $groupOjb);
+            $groupObj = new Group($group->identifier);
+            array_push($groups, $groupObj);
         }
 
         return $groups;

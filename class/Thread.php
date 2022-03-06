@@ -165,8 +165,8 @@ class Thread
 
         $posts = [];
         foreach($results as $post) {
-            $postOjb = new ThreadPost($post->id);
-            array_push($posts, $postOjb);
+            $postObj = new ThreadPost($post->id);
+            array_push($posts, $postObj);
         }
 
         return $posts;

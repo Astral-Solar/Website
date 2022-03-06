@@ -97,8 +97,8 @@ class Board
 
         $boards = [];
         foreach($results as $board) {
-            $boardOjb = new Board($board->id);
-            array_push($boards, $boardOjb);
+            $boardObj = new Board($board->id);
+            array_push($boards, $boardObj);
         }
 
         return $boards;
@@ -118,8 +118,8 @@ class Board
 
         $threads = [];
         foreach($results as $thread) {
-            $threadOjb = new Thread($thread->id);
-            array_push($threads, $threadOjb);
+            $threadObj = new Thread($thread->id);
+            array_push($threads, $threadObj);
         }
 
         return $threads;
@@ -169,8 +169,8 @@ class Board
 
         $boards = [];
         foreach($results as $board) {
-            $boardOjb = new Board($board->id);
-            array_push($boards, $boardOjb);
+            $boardObj = new Board($board->id);
+            array_push($boards, $boardObj);
         }
 
         return $boards;
@@ -194,8 +194,8 @@ class Board
 
         $boards = [];
         foreach($results as $board) {
-            $boardOjb = new Board($board->id);
-            array_push($boards, $boardOjb);
+            $boardObj = new Board($board->id);
+            array_push($boards, $boardObj);
         }
 
         return $boards;
@@ -212,8 +212,8 @@ class Board
 
         $posts = [];
         foreach($results as $post) {
-            $postOjb = new ThreadPost($post->id);
-            array_push($posts, $postOjb);
+            $postObj = new ThreadPost($post->id);
+            array_push($posts, $postObj);
         }
 
         return $posts;
